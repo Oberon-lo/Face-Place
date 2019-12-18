@@ -58,7 +58,7 @@ CREATE TABLE chat (
 CREATE TABLE chat_message (
   message_id SERIAL PRIMARY KEY,
   chat_cont TEXT,
-  author_first_n TEXT,
+  user_id INT REFERENCES users(user_id),
   chat_id INT REFERENCES chat(chat_id)
 );
 
