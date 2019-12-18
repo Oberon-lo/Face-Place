@@ -29,6 +29,7 @@ CREATE TABLE user_hash (
 CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,
   post_cont TEXT,
+  post_time TIMESTAMPTZ,
   user_id INT REFERENCES users(user_id)
 );
 
@@ -41,6 +42,7 @@ CREATE TABLE post_img (
 CREATE TABLE comments (
   com_id SERIAL PRIMARY KEY,
   com_cont TEXT,
+  post_time TIMESTAMPTZ,
   post_id INT REFERENCES posts(post_id)
   user_id INT REFERENCES users(user_id)
 );
@@ -58,6 +60,7 @@ CREATE TABLE chat (
 CREATE TABLE chat_message (
   message_id SERIAL PRIMARY KEY,
   chat_cont TEXT,
+  post_time TIMESTAMPTZ,
   user_id INT REFERENCES users(user_id),
   chat_id INT REFERENCES chat(chat_id)
 );
