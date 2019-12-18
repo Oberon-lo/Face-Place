@@ -6,7 +6,7 @@ const aws = require("aws-sdk");
 const uuid = require('uuid/v4');
 const nodemailer = require('./controllers/nodemailer.js');
 
-const {SESSION_SECRET, PASSWORD, SERVER_PORT} = process.env;
+const {SESSION_SECRET, PASSWORD, SERVER_PORT, CONNECTION_STRING} = process.env;
 
 const app = express();
 // TOP LEVEL MIDDLEWARE \\
@@ -23,11 +23,11 @@ app.use(
   })
 );
 
-// massive(CONNECTION_STRING).then(db => {
-//   app.set("db", db);
-  // console.log("TAC-COM ONLINE");
+massive(CONNECTION_STRING).then(db => {
+  app.set("db", db);
+  console.log("TAC-COM ONLINE");
   app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT} ducks marching on rome`));
-// });
+});
 
 // NODEMAILER \\
 app.post('/api/send', nodemailer.nodemailer)
