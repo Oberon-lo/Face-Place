@@ -26,6 +26,12 @@ CREATE TABLE user_hash (
   user_id INT REFERENCES users(user_id)
 );
 
+CREATE TABLE friends (
+    friend_row_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    friend_id INT REFERENCES users(user_id)
+);
+
 CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,
   post_cont TEXT,

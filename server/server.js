@@ -31,7 +31,6 @@ app.post('/api/send', nodemailer.nodemailer);
 // POST ENDPOINTS \\
 app.get('/posts/all', postCtrl.getAll);
 
-
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
 console.log("TAC-COM ONLINE");
