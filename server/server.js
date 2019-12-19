@@ -5,11 +5,13 @@ const session = require("express-session");
 const aws = require("aws-sdk");
 const uuid = require('uuid/v4');
 const nodemailer = require('./controllers/nodemailer.js');
-const postCtrl = require ('./controllers/postController.js')
+const postCtrl = require ('./controllers/postController.js');
+const comCtrl = require ('./controllers/comController.js');
 
 const { SESSION_SECRET, PASSWORD, SERVER_PORT, CONNECTION_STRING } = process.env;
 
 const app = express();
+
 // TOP LEVEL MIDDLEWARE \\
 app.use(express.json());
 
@@ -30,6 +32,18 @@ app.post('/api/send', nodemailer.nodemailer);
 
 // POST ENDPOINTS \\
 app.get('/posts/all', postCtrl.getAll);
+app.get('/posts/byUser/:user_id', postCtrl.getUserPosts);
+app.get('/post/images/:post_id', postCtrl.getPostImg);
+app.post('/posts/newPost', postCtrl.makePost);
+app.put('/post/:post_id', postCtrl.editPost);
+app.delete('/post/:post_id', postCtrl.deletePost);
+
+// COMMENT ENDPOINTS \\
+app.get('/post/comments/:post_id', comCtrl.getCom);
+app.post('/post/newCom/:post_id',comCtrl.makeCom);
+app.put('/post/comment/:com_id', comCtrl.editCom);
+app.delete('/post/comment/:com_id', comCtrl.deleteCom);
+
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
