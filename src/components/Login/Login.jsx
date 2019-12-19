@@ -9,19 +9,25 @@ export default class Login extends Component {
             password: ''
         }
     }
+    handleChange = (key, value) => {
+        this.setState({
+          [key]: value
+        })
+      }
     render(){
+    const { email, password } = this.state;
         return(
             <div>
                 <input
-                    // onChange={e => this.handleChange('email', e.target.value)}
-                    value={this.state.email}
+                    onChange={e => this.handleChange('email', e.target.value)}
+                    value={email}
                     placeholder='Email'
                     type='email'
                     />
                     <hr/>
                 <input
                     onChange={e => this.handleChange('password', e.target.value)}
-                    value={this.state.password}
+                    value={password}
                     placeholder='Password'
                     type='password'
                     />
