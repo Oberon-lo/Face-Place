@@ -9,7 +9,9 @@ export default class Header extends Component {
                 <Link to='/'>
                 <h1>FacePlace!</h1>
                 </Link>
-                
+                <Link to='/home'>
+                    <button>Home</button>
+                </Link>
                 <Link to='/profile'>
                     <button>
                         My Profile
