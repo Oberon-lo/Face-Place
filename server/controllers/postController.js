@@ -38,7 +38,13 @@ module.exports = {
   },
   editPost: async (req, res) => {
     const db = req.app.get('db');
-    
+    const {post_id} = req.params;
+    const {post_cont} = req.body;
+    try {
+      await db.post.edit_post_cont([post_cont]);
+    } catch (err) {
+      return res.send(err);
+    }
   },
   deletePost: async (req, res) => {
     const db = req.app.get('db');
