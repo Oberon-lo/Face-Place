@@ -27,7 +27,7 @@ export default class Login extends Component {
                     />
                     <hr/>
                 <Link to='/register'>
-                    Not a Member? Register Here!
+                    Not a member? Register here!
                 </Link>
             </div>
         )
