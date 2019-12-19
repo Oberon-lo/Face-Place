@@ -43,15 +43,16 @@ module.exports = {
 
     const result = bcrypt.compareSync(password, check[0].hash);
     if (result === true) {
-      const user = db.auth.get_session_info(email)
+    const user = await db.auth.get_session_info(email)
           req.session.user = {
-            id: user.user_id,
-            firstName: user.first_name,
-            profilePic: user.prof_pic,
-            isVerified: user.email_verif,
-            isAdmin: user.is_admin
+            id: user[0].user_id,
+            firstName: user[0].first_name,
+            lastName: user[0].last_name,
+            profilePic: user[0].prof_pic,
+            isVerified: user[0].email_verif,
+            isAdmin: user[0].is_admin
           };
-      return res.status(200).send({ message: `welcome back ${req.session.user.firstName} ${req.session.user.lastName} ` });
+      return res.status(200).send({ message: `welcome back ${req.session.user.firstName} ${req.session.user.lastName}!`});
     } else {
       res.status(404).send({ message: "Password incorrect" });
     }
