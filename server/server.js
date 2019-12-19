@@ -6,6 +6,7 @@ const aws = require("aws-sdk");
 const uuid = require("uuid/v4");
 const nodemailer = require("./controllers/nodemailer.js");
 const auth = require("./controllers/authController.js");
+const postCtrl = require ('./controllers/postController.js')
 
 const {
   SESSION_SECRET,
@@ -44,3 +45,6 @@ app.post("/api/send", nodemailer.nodemailer);
 app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.delete("/api/logout", auth.logout);
+
+// POST ENDPOINTS \\
+app.get('/posts/all', postCtrl.getAll);
