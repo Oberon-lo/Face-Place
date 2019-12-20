@@ -68,12 +68,13 @@ module.exports = {
   },
   emailVerif: (req,res) => {
     const db = req.app.get("db");
-    const { user_id } = +req.params.id;
+    const user_id = +req.params.id;
 
     db.auth
       .email_verif({ user_id })
       .then(result => {
-        res.status(200).send(result);
+        // console.log(user_id);
+        res.status(200).send({result, message:'done' });
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
@@ -91,9 +92,11 @@ module.exports = {
     if (req.params.id === req.session.user.id) {
       next();
     } else {
+      console.log(res.session.user);
+      
       res
         .status(401)
-        .send({ message: "User should be able to access this element." });
+        .send({ message: "User should not be able to access this element."});
     }
   },
   adminsOnly: (req, res, next) => {
