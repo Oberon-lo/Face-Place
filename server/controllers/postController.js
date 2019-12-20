@@ -64,8 +64,8 @@ module.exports = {
     const { post_id } = req.params;
     const { post_img } = body;
     try {
-      await db.post.add_post_img([post_id, post_img])
-      res.status(201).send({ message: 'image added' })
+      await db.post.add_post_img([post_id, post_img]);
+      res.status(201).send({ message: 'image added' });
     } catch (err) {
       res.send(err);
     };
@@ -99,7 +99,7 @@ module.exports = {
         await db.post.delete_post_img([post_id]);
         await db.post.delete_post([post_id]);
         res.status(200).send({ message: 'post Deleted' });
-      }
+      };
     } catch (err) {
       return res.send(err);
     };
