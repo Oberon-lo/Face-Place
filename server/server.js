@@ -6,7 +6,8 @@ const aws = require("aws-sdk");
 const uuid = require("uuid/v4");
 const nodemailer = require("./controllers/nodemailer.js");
 const auth = require("./controllers/authController.js");
-const postCtrl = require ('./controllers/postController.js')
+const postCtrl = require("./controllers/postController.js");
+const userCtrl = require("./controllers/userController.js");
 
 const {
   SESSION_SECRET,
@@ -38,6 +39,8 @@ massive(CONNECTION_STRING).then(db => {
   );
 });
 
+// ENDPOINTS \\
+
 // NODEMAILER \\
 app.post("/api/send", nodemailer.nodemailer);
 
@@ -45,6 +48,13 @@ app.post("/api/send", nodemailer.nodemailer);
 app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.delete("/api/logout", auth.logout);
+app.put("/api/email/:id", auth.emailVerif);
+
+// USER EDIT ENDPOINTS \\
+app.put("/api/name/:id", userCtrl.userName);
+app.put("/api/profilePic/:id", userCtrl.prof_pic);
+app.put("/api/bio/:id", userCtrl.bio);
+app.put("/api/cover/:id", userCtrl.coverPic);
 
 // POST ENDPOINTS \\
-app.get('/posts/all', postCtrl.getAll);
+app.get("/posts/all", postCtrl.getAll);
