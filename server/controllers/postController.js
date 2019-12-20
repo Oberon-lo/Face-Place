@@ -59,6 +59,27 @@ module.exports = {
       return res.send(err);
     };
   },
+  addPostImg: async (req, res) => {
+    const db = req.app.get('db');
+    const { post_id } = req.params;
+    const { post_img } = body;
+    try {
+      await db.post.add_post_img([post_id, post_img])
+      res.status(201).send({ message: 'image added' })
+    } catch (err) {
+      res.send(err);
+    };
+  },
+  deletePostImg: async (req, res) => {
+    const db = req.app.get('db');
+    const { post_img_id } = req.params;
+    try {
+      await db.post.delete_post_img_img_id([post_img_id]);
+      res.status(200).send({ message: 'image deleted' });
+    } catch (err) {
+      res.send(err);
+    };
+  },
   deletePost: async (req, res) => {
     const db = req.app.get('db');
     const { post_id } = req.params;
@@ -69,11 +90,11 @@ module.exports = {
           await db.comment.delete_com_img([com_id]);
           await db.comment.delete_com([com_id]);
           if (i === comArr.length - 1) {
-            await db.post.delete_post_img([post_id]);
+            await db.post.delete_post_img_post_id([post_id]);
             await db.post.delete_post([post_id]);
             res.status(200).send({ message: 'post Deleted' });
-          }
-        })
+          };
+        });
       } else {
         await db.post.delete_post_img([post_id]);
         await db.post.delete_post([post_id]);
@@ -83,4 +104,4 @@ module.exports = {
       return res.send(err);
     };
   }
-}
+};

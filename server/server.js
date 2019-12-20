@@ -47,6 +47,8 @@ app.get('/posts/byUser/:user_id', postCtrl.getUserPosts);
 app.get('/post/images/:post_id', postCtrl.getPostImg);
 app.post('/posts/newPost', postCtrl.makePost);
 app.put('/post/:post_id', postCtrl.editPost);
+app.post('/post/img/:post_id', postCtrl.addPostImg );
+app.delete('/post/img/:post_img_id', postCtrl.deletePostImg);
 app.delete('/post/:post_id', postCtrl.deletePost);
 
 // COMMENT ENDPOINTS \\
