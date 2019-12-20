@@ -7,6 +7,7 @@ SELECT
   u.prof_pic, 
   p.user_id   
 FROM posts p
+-- select * returns too much repeated and unused data (plus it's confusing to look at)
 JOIN users u ON u.user_id = p.user_id
 JOIN friends f ON f.frind_id = u.user_id
 WHERE f.user_id = ${user_id}
