@@ -52,7 +52,8 @@ export const selectPost = (post) => {
         type: SELECT_POST,
         payload: {
             post_cont: post.post_cont,
-            img: post.img
+            img: post.img,
+            selected_comment: post
         }
     }
 }
@@ -70,7 +71,8 @@ export const selectComment = (comment) => {
         type: SELECT_COMMENT,
         payload: {
             com_cont: comment.com_cont,
-            img: comment.img
+            img: comment.img,
+            selected_comment: comment
         }
     }
 }
