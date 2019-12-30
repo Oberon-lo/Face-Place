@@ -1,7 +1,8 @@
 module.exports = {
   getAll: async (req, res) => {
     const db = req.app.get('db');
-    const { offset, user_id } = req.body;
+    const { offset } = req.body;
+    const {user_id} = req.params;
     try {
       const fivePost = await db.post.get_posts({ offset, user_id });
       res.status(200).send(fivePost);
@@ -23,9 +24,10 @@ module.exports = {
     const db = req.app.get('db');
     const { post_id } = req.params;
     try {
-      const imageArr = await db.post.get_post_img([post_id]);
+      const imageArr = await db.post.get_post_img_post_id([post_id]);
       res.status(200).send(imageArr);
     } catch (err) {
+      console.log(err)
       return res.send(err);
     };
   },

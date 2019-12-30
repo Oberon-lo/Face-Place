@@ -52,7 +52,7 @@ app.put("/api/bio/:id", userCtrl.bio);
 app.put("/api/cover/:id", userCtrl.coverPic);
 
 // POST ENDPOINTS \\
-app.get('/posts/all', postCtrl.getAll);
+app.get('/posts/all/:user_id', postCtrl.getAll);
 app.get('/posts/byUser/:user_id', postCtrl.getUserPosts);
 app.get('/post/images/:post_id', postCtrl.getPostImg);
 app.post('/posts/newPost', postCtrl.makePost);
