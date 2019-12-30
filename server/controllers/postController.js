@@ -68,7 +68,7 @@ module.exports = {
   addPostImg: async (req, res) => {
     const db = req.app.get('db');
     const { post_id } = req.params;
-    const { post_img } = body;
+    const { post_img } = req.body;
     try {
       await db.post.add_post_img([post_id, post_img]);
       res.status(201).send({ message: 'image added' });
@@ -83,6 +83,7 @@ module.exports = {
       await db.post.delete_post_img_img_id([post_img_id]);
       res.status(200).send({ message: 'image deleted' });
     } catch (err) {
+      console.log(err);
       res.send(err);
     };
   },

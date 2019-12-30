@@ -1,3 +1,3 @@
 UPDATE posts
-SET post_cont = $2
+SET postcont = $2
 WHERE post_id = $1
