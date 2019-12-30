@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
-import axios from 'axios';
 import Header from './components/Header/Header';
 import routes from './routes';
 import Footer from './components/Footer/Footer';
+import { withRouter } from 'react-router-dom';
 
-function App() {
-
+function App(props) { 
   return (
     <div className="App">
-      <Header/>
+      { props.location.pathname === '/' || props.location.pathname === '/register' ? null : <Header/> }
       {routes}
-      <Footer/>
+      { props.location.pathname === '/' || props.location.pathname === '/register' ? null : <Footer/> }
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);
