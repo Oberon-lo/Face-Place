@@ -27,7 +27,7 @@ module.exports = {
     try {
       const com_id = db.comment.make_com([post_id, com_cont, user_id]);
       if (imgArr !== []) {
-        imgArr.forEach((img, i) => {
+        imgArr.forEach(async(img, i) => {
           await db.comment.add_com_img([com_id, img]);
           if (i === imgArr.length - 1) {
             res.status(201).send({ message: 'comment created' });

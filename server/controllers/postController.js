@@ -34,14 +34,18 @@ module.exports = {
     const { user_id, post_cont, post_img } = req.body;
     try {
       const post_id = await db.post.make_post({ user_id, post_cont });
-      if (post_img !== []) {
-        post_img.forEach((img, i) => {
-          await db.post.make_image_post([post_id, img]);
-          if (i === post_img.length - 1) {
-            return res.status(201).send({ message: 'post created' });
+      if (post_img.length !== 0) {
+        post_img.forEach(async (img, i) => {
+          try {
+            await db.post.make_image_post([post_id[0].post_id, img]);
+            if (i === post_img.length - 1) {
+              return res.status(201).send({ message: 'post created' });
+            }
+          } catch (err) {
+            return res.send(err);
           }
         });
-      } else {
+      } else if (post_img.length === 0) {
         return res.status(201).send({ message: 'post created' });
       }
     } catch (err) {
@@ -86,7 +90,7 @@ module.exports = {
     try {
       const comArr = await db.post.get_post_coms([post_id]);
       if (comArr !== []) {
-        comArr.forEach((com_id, i) => {
+        comArr.forEach(async (com_id, i) => {
           await db.comment.delete_com_img([com_id]);
           await db.comment.delete_com([com_id]);
           if (i === comArr.length - 1) {
