@@ -1,8 +1,33 @@
-.header{
-    background: #994e4e;
-    height: 10vh;
-    width: 100vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.header {
+  background: #994e4e;
+  height: 6%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.logo {
+  color: whitesmoke;
+  max-height: 80%;
+  display: flex;
+  align-items: center;
+}
+.logo-pic {
+  max-height: 50px;
+  margin: 5px;
+}
+.header-prof {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  color: whitesmoke;
+}
+
+.profilepic-header {
+  border-radius: 50%;
+  max-height: 100%;
+  margin-right: 10px;
 }
