@@ -25,18 +25,24 @@ module.exports = {
     const { post_id } = req.params;
     const { com_cont, imgArr, user_id } = req.body;
     try {
-      const com_id = db.comment.make_com([post_id, com_cont, user_id]);
-      if (imgArr !== []) {
+      const com_id = await db.comment.make_com([post_id, com_cont, user_id]);
+      if (imgArr.length !== 0) {
         imgArr.forEach(async(img, i) => {
-          await db.comment.add_com_img([com_id, img]);
-          if (i === imgArr.length - 1) {
-            res.status(201).send({ message: 'comment created' });
-          };
+          try {
+            await db.comment.add_com_img({com_id: com_id[0].com_id, img});
+            if (i === imgArr.length - 1) {
+              res.status(201).send({ message: 'comment created' });
+            };
+          } catch (err) {
+            console.log(err);
+            res.send(err);
+          }
         });
-      } else {
+      } else if (imgArr.length === 0) {
         res.status(201).send({ message: 'comment created' });
       };
     } catch (err) {
+      console.log(err);
       res.send(err);
     };
   },
