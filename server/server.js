@@ -36,6 +36,9 @@ app.use(
 
 // ENDPOINTS \\
 
+// DEV TOOLS \\
+app.get("/api/users", userCtrl.getAllUsers);
+
 // NODEMAILER \\
 app.post("/api/send", nodemailer.nodemailer);
 
@@ -44,6 +47,7 @@ app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.delete("/api/logout", auth.logout);
 app.put("/api/email/:id", auth.emailVerif);
+app.get("/api/session", userCtrl.getUserInfo)
 
 // USER EDIT ENDPOINTS \\
 app.put("/api/name/:id", userCtrl.userName);
