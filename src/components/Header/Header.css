@@ -8,6 +8,8 @@ header {
   justify-content: space-around;
   align-items: center;
   align-content: center;
+  position: sticky;
+  z-index: -1;
 }
 
 .logo {
@@ -20,7 +22,7 @@ header {
   max-width: 4vw;
   max-height: 4vh;
 }
-.bar{
+.bar {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -28,19 +30,29 @@ header {
   align-items: center;
   align-content: center;
 }
+.bar button {
+  padding: 10px;
+  font-size: 18px;
+  background: rgba(219, 227, 231, 0);
+  margin: 5px;
+  /* border-color: rgba(219, 227, 231, 0); */
+}
+.bar button:hover{
+  background-color: yellow;
+}
 .header-prof {
   display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	align-items: center;
-	align-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
   color: whitesmoke;
   max-height: 80%;
 }
 .profilepic-header {
   border-radius: 60%;
   max-height: 60px;
-  max-width:80px;
+  max-width: 80px;
   margin-right: 10px;
 }
