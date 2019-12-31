@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-
 module.exports = {
   register: async (req, res) => {
     const db = req.app.get("db");
@@ -56,7 +55,7 @@ module.exports = {
       return res
         .status(200)
         .send({
-          message: `welcome back ${req.session.user.firstName} ${req.session.user.lastName}!`
+          message: `Welcome back ${req.session.user.firstName} ${req.session.user.lastName}!`
         });
     } else {
       res.status(404).send({ message: "Password incorrect" });

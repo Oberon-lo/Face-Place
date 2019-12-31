@@ -1,0 +1,35 @@
+.login{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+  justify-content: center;
+	align-items: center;
+  align-content: stretch;
+  height: 100vh;
+  background-image: url(https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/jack-millard-8F885lcKzBQ-unsplash.jpg);
+  width: 100vw;
+  background-size: 100%, 100%;
+  background-repeat: no-repeat;
+}
+.welcome{
+  margin-bottom: 5%;
+  color: rgba(80, 136, 173, 0.95);
+  /* rgba(79, 89, 95, 0.959); */
+}
+.login-form{
+  background: rgba(219, 227, 231, 0.75);
+  height: 45vh;
+  width:30vw;
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+  justify-content: center;
+	align-items: center;
+  align-content: stretch;
+  color: rgb(79, 89, 95);
+}
+.loginButton{
+padding:10px;
+font-size: 18px;
+background:rgba(219, 227, 231, 0.95);
+}
