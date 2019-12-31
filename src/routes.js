@@ -9,7 +9,7 @@ import ProfPage from './components/ProfPage/ProfPage';
 export default (
     <Switch>
         <Route path='/home' component={Home}/>
-        <Route path='/' component={Login}/>
+        <Route exact path='/' component={Login}/>
         <Route path='/register' component={Register}/>
         <Route path='/profile' component={ProfPage}/>
     </Switch>

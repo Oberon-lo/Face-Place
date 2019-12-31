@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import routes from './routes';
+import routes from './routes.js';
 import Footer from './components/Footer/Footer';
 import { withRouter } from 'react-router-dom';
 
