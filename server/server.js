@@ -8,6 +8,7 @@ const nodemailer = require("./controllers/nodemailer.js");
 const auth = require("./controllers/authController.js");
 const postCtrl = require("./controllers/postController.js");
 const userCtrl = require("./controllers/userController.js");
+const s3Ctrl = require('./controllers/s3.js');
 
 const {
   SESSION_SECRET,
@@ -44,8 +45,10 @@ massive(CONNECTION_STRING).then(db => {
 // DEV TOOLS \\
 app.get("/api/users", userCtrl.getAllUsers);
 
-// NODEMAILER \\
+// NODEMAILER / s3 \\
 app.post("/api/send", nodemailer.nodemailer);
+app.get("/sign-s3", s3Ctrl.s3);
+
 
 // AUTH / SESSION \\
 app.post("/api/register", auth.register);

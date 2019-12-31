@@ -1,11 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-export default class ProfPage extends Component {
-    render(){
-        return(
-            <div>
-                ProfPage
-            </div>
-        )
-    }
+class ProfPage extends Component {
+  render() {
+    return <div>
+      <button onClick = {() => {console.log('hit');
+      } }>
+      ProfPage
+      </button>
+      </div>;
+  }
 }
+
+export default ProfPage;

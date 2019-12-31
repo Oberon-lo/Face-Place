@@ -13,5 +13,4 @@ export default (
         <Route path='/register' component={Register}/>
         <Route path='/profile' component={ProfPage}/>
     </Switch>
-
-)
+);

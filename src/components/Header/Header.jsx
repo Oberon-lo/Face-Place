@@ -14,26 +14,29 @@ export default class Header extends Component {
   }
 
   componentDidMount = () => {
-  axios.get("/api/session").then(res => {
-    this.setState({
-      profPic: res.profilePic,
-      firstName: res.firstName,
-      lastName: res.lastName
+  this.getUser()
+  }
+  getUser(){
+    axios.get("/api/session").then(res => {
+      this.setState({
+        profPic: res.data.profilePic,
+        firstName: res.data.firstName,
+        lastName: res.data.lastName
+      })
     })
-  })
   }
   
   render() {
     const {profPic, firstName, lastName} = this.state
     return (
-      <div className="header">
+      <header>
         <div className="logo">
           <Link to = '/'>
-        <img className = "logo-pic" src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/SmugMug-icon.png" alt="oops"/> 
+        <img className = "logo-pic" src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico" alt="oops"/> 
           </Link>
         <h1> FacePlace! </h1>
         </div>
-        <nav>
+        <nav className = 'bar'>
         <Link to="/home">
           <button>Home</button>
         </Link>
@@ -45,7 +48,7 @@ export default class Header extends Component {
           <img src={profPic} alt="oops" className="profilepic-header"/>
         <h2>{firstName} {lastName}</h2>
         </div>
-      </div>
+      </header>
     );
   }
 }
