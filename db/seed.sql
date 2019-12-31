@@ -34,7 +34,7 @@ CREATE TABLE friends (
 
 CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,
-  post_cont TEXT,
+  postcont TEXT,
   post_time TIMESTAMPTZ,
   user_id INT REFERENCES users(user_id)
 );
