@@ -92,22 +92,24 @@ module.exports = {
     const { post_id } = req.params;
     try {
       const comArr = await db.post.get_post_coms([post_id]);
-      if (comArr !== []) {
-        comArr.forEach(async (com_id, i) => {
-          await db.comment.delete_com_img([com_id]);
-          await db.comment.delete_com([com_id]);
+      console.log(comArr);
+      if (comArr.length !== 0) {
+        comArr.forEach(async (comment, i) => {
+          await db.comment.delete_com_img([comment.com_id]);
+          await db.comment.delete_com([comment.com_id]);
           if (i === comArr.length - 1) {
             await db.post.delete_post_img_post_id([post_id]);
             await db.post.delete_post([post_id]);
             res.status(200).send({ message: 'post Deleted' });
           };
         });
-      } else {
-        await db.post.delete_post_img([post_id]);
+      } else if(comArr.length === 0) {
+        await db.post.delete_post_img_post_id([post_id]);
         await db.post.delete_post([post_id]);
         res.status(200).send({ message: 'post Deleted' });
       };
     } catch (err) {
+      console.log(err);
       return res.send(err);
     };
   }
