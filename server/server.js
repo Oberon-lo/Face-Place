@@ -8,6 +8,7 @@ const nodemailer = require("./controllers/nodemailer.js");
 const auth = require("./controllers/authController.js");
 const postCtrl = require("./controllers/postController.js");
 const userCtrl = require("./controllers/userController.js");
+const socket = require("socket.io");
 
 const {
   SESSION_SECRET,
@@ -17,6 +18,7 @@ const {
 } = process.env;
 
 const app = express();
+
 // TOP LEVEL MIDDLEWARE \\
 app.use(express.json());
 
