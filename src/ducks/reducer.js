@@ -1,114 +1,145 @@
+import axios from 'axios';
+
 const initialState = {
-    user_id: '',
+    //user info
+    user_id: 0,
     email: '',
     first_name: '',
     last_name: '',
     prof_pic: '',
-    chat_cont: '',
-    img: '',
-    post_img: [], 
-    post_cont: '',
     bio: '',
     cover_pic: '',
-    com_cont: '',
     is_Admin: false,
     email_verif: false,
+    //chat
+    chat_cont: '',
+    img: '',
+    //post
+    postArr: [],
+    post_img: [],
+    post_cont: '',
+    //comment
+    com_cont: '',
+    // ?
     selected_post: {},
     selected_comment: {},
     current_user: {},
-}
+};
+
+// ACTION CONSTANTS \\
 
 const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
 // const CANCEL = 'CANCEL';
 const LOGIN = 'LOGIN';
 // const REGISTER = 'REGISTER';
-const POST = 'POST';
 const COMMENT = 'COMMENT';
 const SELECT_POST = 'SELECT_POST';
 const SELECT_COMMENT = 'SELECT_COMMENT';
+const GET_SESSION = "GET_SESSION";
 
-//Action Builders
+// post 
+const RETRIEVE_POSTS = "RETRIEVE_POSTS";
+
+
+// ACTION BUILDERS \\
 export const setAuthenticated = (hasAuth, userObj) => {
-    return{
+    return {
         type: IS_AUTHENTICATED,
         payload: {
             isAuthenticated: hasAuth,
             current_user: userObj
         }
-    }
-}
-export const addPost = (post_cont, img) => {
-    return{
-        type: POST,
-        payload: {
-            post_cont: post_cont,
-            img: img
-        }
-    }
-}
+    };
+};
+export const getSession = () => {
+    return {
+        type: GET_SESSION,
+        payload: axios.get(`/api/session`)
+            .then(response => {
+                console.log('hit----', response.data);
+                return { user_id: response.data.id, first_name: response.data.firstName, last_name: response.data.lastName, prof_pic: response.data.profilePic, is_Admin: response.data.isAdmin, email_verif: response.data.isVerified };
+            })
+    };
+};
 export const selectPost = (post) => {
-    return{
+    return {
         type: SELECT_POST,
         payload: {
             post_cont: post.post_cont,
             img: post.img,
             selected_comment: post
         }
-    }
-}
+    };
+};
 export const addComment = (com_cont, img) => {
-    return{
+    return {
         type: COMMENT,
         payload: {
             com_cont: com_cont,
             img: img
         }
-    }
-}
+    };
+};
 export const selectComment = (comment) => {
-    return{
+    return {
         type: SELECT_COMMENT,
         payload: {
             com_cont: comment.com_cont,
             img: comment.img,
             selected_comment: comment
         }
-    }
-}
+    };
+};
+// post
+export const retrievePosts = (user_id, offset) => {
+    return {
+        type: RETRIEVE_POSTS,
+        payload: axios.get(`/posts/all/${user_id}`, offset)
+            .then(response => {
+                return {posts: response.data};
+            })
+    };
+};
 
 export default function reducer(state = initialState, action) {
-    switch(action.type) {
+    const { payload } = action;
+    switch (action.type) {
         case IS_AUTHENTICATED:
-            return{
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
         case LOGIN:
-            return{
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
-        case POST:
-            return{
+        case GET_SESSION:
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
         case COMMENT:
-            return{
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
         case SELECT_POST:
-            return{
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
         case SELECT_COMMENT:
-            return{
+            return {
                 ...state,
-                ...action.payload
+                ...payload
             }
-
-     default: return state
-    }
-}
+        //post
+        case RETRIEVE_POSTS:
+            return {
+                ...state,
+                postArr: [...this.postArr, payload.posts]
+            }
+        default: return state
+    };
+};

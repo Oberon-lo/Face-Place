@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
+import {getSession} from '../../ducks/reducer';
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./login.css";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -18,6 +20,7 @@ export default class Login extends Component {
     await axios
       .post("/api/login", { email, password })
       .then(res => {
+        getSession()
         Swal.fire({
           icon: "success",
           title: "Logged in!",
@@ -91,3 +94,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(null, {getSession})(Login);
