@@ -34,7 +34,11 @@ export default class Header extends Component {
           <Link to = '/'>
         <img className = "logo-pic" src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico" alt="oops"/> 
           </Link>
-        <h1> FacePlace! </h1>
+          <h1>
+          <Link to = '/'>
+        FacePlace! 
+          </Link>
+          </h1>
         </div>
         <nav className = 'bar'>
         <Link to="/home">

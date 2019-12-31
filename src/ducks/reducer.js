@@ -20,9 +20,9 @@ const initialState = {
 }
 
 const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
-const CANCEL = 'CANCEL';
+// const CANCEL = 'CANCEL';
 const LOGIN = 'LOGIN';
-const REGISTER = 'REGISTER';
+// const REGISTER = 'REGISTER';
 const POST = 'POST';
 const COMMENT = 'COMMENT';
 const SELECT_POST = 'SELECT_POST';
