@@ -1,58 +1,87 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./Header.css";
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
-    this.state ={
-      profPic: '',
-      firstName: '',
-      lastName: '',
-    }
+    this.state = {
+      profPic: "",
+      firstName: "",
+      lastName: ""
+    };
   }
 
   componentDidMount = () => {
-  this.getUser()
-  }
-  getUser(){
+    this.getUser();
+  };
+  getUser() {
     axios.get("/api/session").then(res => {
       this.setState({
         profPic: res.data.profilePic,
         firstName: res.data.firstName,
         lastName: res.data.lastName
-      })
-    })
+      });
+    });
   }
-  
+
+  logout() {
+    axios.delete("/api/logout").then(
+      Swal.fire({
+        icon: "warning",
+        title: "Logged Out.",
+        text: "Come Back Soon!",
+        confirmButtonText: "Continue",
+        timer: 1500,
+        timerProgressBar: true
+      }).then(result => {
+        if (result.value) {
+          this.props.history.push("/");
+          window.location.reload();
+        } else if (result.dismiss === Swal.DismissReason.timer) {
+          this.props.history.push("/");
+          window.location.reload();
+        }
+      })
+    );
+  }
+
   render() {
-    const {profPic, firstName, lastName} = this.state
+    const { profPic, firstName, lastName } = this.state;
     return (
       <header>
         <div className="logo">
-          <Link to = '/'>
-        <img className = "logo-pic" src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico" alt="oops"/> 
+          <Link to="/">
+            <img
+              className="logo-pic"
+              src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico"
+              alt="oops"
+            />
           </Link>
           <h1>
-          <Link to = '/'>
-        FacePlace! 
-          </Link>
+            <Link to="/">FacePlace!</Link>
           </h1>
         </div>
-        <nav className = 'bar'>
-        <Link to="/home">
-          <button>Home</button>
-        </Link>
-        <Link to="/profile">
-          <button>My Profile</button>
-        </Link>
+        <nav className="bar">
+          <Link to="/home">
+            <button>Home</button>
+          </Link>
+          <Link to="/profile">
+            <button>My Profile</button>
+          </Link>
+          <button onClick = {() => this.logout() }>Logout</button>
         </nav>
         <div className="header-prof">
-          <img src={profPic} alt="oops" className="profilepic-header"/>
-        <h2>{firstName} {lastName}</h2>
+          <img src={profPic} alt="oops" className="profilepic-header" />
+          <h2>
+            {firstName} {lastName}
+          </h2>
         </div>
       </header>
     );
   }
 }
+export default withRouter(Header);

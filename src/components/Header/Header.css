@@ -1,6 +1,5 @@
 header {
-  background: #994e4e;
-  margin-top: 0px;
+  background: #91AFC4;
   height: 95px;
   width: 100vw;
   display: flex;
@@ -10,6 +9,7 @@ header {
   align-items: center;
   align-content: center;
   position: sticky;
+  margin-top: 0px;
   z-index: 1;
 }
 
@@ -34,9 +34,9 @@ header {
 .bar button {
   padding: 10px;
   font-size: 18px;
-  background: rgba(219, 227, 231, 0);
+  background: rgba(219, 227, 231, 1);
   margin: 5px;
-  /* border-color: rgba(219, 227, 231, 0); */
+  border-color: rgba(219, 227, 231, 0);
 }
 .bar button:hover{
   background-color: yellow;
