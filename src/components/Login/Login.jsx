@@ -1,41 +1,86 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import './login.css'
 
 export default class Login extends Component {
-    constructor() {
-        super();
-        this.state= {
-            email: '',
-            password: ''
-        }
-    }
-    handleChange = (key, value) => {
-        this.setState({
-          [key]: value
-        })
-      }
-    render(){
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+  async login() {
     const { email, password } = this.state;
-        return(
-            <div>
-                <input
-                    onChange={e => this.handleChange('email', e.target.value)}
-                    value={email}
-                    placeholder='Email'
-                    type='email'
-                    />
-                    <hr/>
-                <input
-                    onChange={e => this.handleChange('password', e.target.value)}
-                    value={password}
-                    placeholder='Password'
-                    type='password'
-                    />
-                    <hr/>
-                <Link to='/register'>
-                    Not a member? Register here!
-                </Link>
-            </div>
-        )
-    }
+    await axios
+      .post("/api/login", { email, password })
+      .then(res => {
+        Swal.fire({
+          icon: "success",
+          title: "Logged in!",
+          text: res.data.message,
+          confirmButtonText: "Continue",
+          timer: 1000,
+          timerProgressBar: true
+        }
+        ).then(result => {
+          if (result.value) {
+            this.props.history.push("/home");
+            window.location.reload();
+          } else if (result.dismiss === Swal.DismissReason.timer) {
+            this.props.history.push("/home");
+            window.location.reload();
+          }
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          text: err.response.data.message
+        });
+      });
+  }
+
+
+  handleChange = (key, value) => {
+    this.setState({
+      [key]: value
+    });
+  };
+
+  render() {
+    return (
+      <div className = 'login'>
+        {/* <img src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/jack-millard-8F885lcKzBQ-unsplash.jpg" alt="background" className="background"/> */}
+        <form className="login-form">
+        <h1 className = 'welcome'> Welcome to Face Place. </h1>
+        <input
+          onChange={e => this.handleChange("email", e.target.value)}
+          value={this.state.email}
+          placeholder="Email"
+          type="email"
+          />
+        <br />
+        <br />
+        <input
+          onChange={e => this.handleChange("password", e.target.value)}
+          value={this.state.password}
+          placeholder="Password"
+          type="password"
+          />
+        <br />
+        <br/>
+        <button onClick={() => this.login()} className = 'loginButton'>Login</button>
+        <br />
+        <br />
+        <span>Not a member?</span>
+        <br />
+        <Link to="/register">Register here!</Link>
+          </form>
+      </div>
+    );
+  }
 }

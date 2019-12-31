@@ -1,8 +1,46 @@
-.header{
-    background: #994e4e;
-    height: 10vh;
-    width: 100vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+header {
+  background: #994e4e;
+  height: 95px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+
+.logo {
+  color: whitesmoke;
+  max-height: 80%;
+  display: flex;
+  align-items: center;
+}
+.logo-pic {
+  max-width: 4vw;
+  max-height: 4vh;
+}
+.bar{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+.header-prof {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: space-around;
+  color: whitesmoke;
+  max-height: 80%;
+}
+.profilepic-header {
+  border-radius: 60%;
+  max-height: 60px;
+  max-width:80px;
+  margin-right: 10px;
 }
