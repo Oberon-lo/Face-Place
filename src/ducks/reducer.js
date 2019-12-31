@@ -3,7 +3,6 @@ const initialState = {
     email: '',
     first_name: '',
     last_name: '',
-    password: '',
     prof_pic: '',
     chat_cont: '',
     img: '',

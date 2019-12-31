@@ -45,6 +45,7 @@ app.post("/api/send", nodemailer.nodemailer);
 app.get("/sign-s3", s3Ctrl.s3);
 
 
+
 // AUTH / SESSION \\
 app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
@@ -81,6 +82,6 @@ massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
   console.log("TAC-COM ONLINE");
   app.listen(SERVER_PORT, () =>
-    console.log(`${SERVER_PORT} BOTTLES OF (undefined) ON THE WALL!!!`)
+    console.log(`${SERVER_PORT} BOTTLES OF ON THE WALL!!!`)
   );
 });
