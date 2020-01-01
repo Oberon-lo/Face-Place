@@ -34,8 +34,8 @@ class Header extends Component {
       resetSession();
       Swal.fire({
         icon: "warning",
-        title: "Logged Out.",
-        text: res.data.message,
+        title: res.data.message,
+        text: "Come Back Soon!",
         confirmButtonText: "Continue",
         timer: 1200,
         timerProgressBar: true
