@@ -100,10 +100,7 @@ export function retrievePosts(user_id, offset) {
   return {
     type: RETRIEVE_POSTS,
     payload: axios.get(`/posts/all/${user_id}`, offset)
-      .then(response => {
-        console.log("response hit-------", response.data)
-        return response.data ;
-      })
+      .then(response => response.data)
   };
 };
 export const postContentHandler = (post_cont) => {
@@ -158,7 +155,7 @@ export default function (state = initialState, action) {
       }
     //post
     case RETRIEVE_POSTS + '_FULFILLED':
-      console.log("case hit-------------");
+      console.log("posts case hit-------------");
       return {
         ...state,
         postArr: [...this.postArr, ...payload]
