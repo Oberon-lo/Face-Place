@@ -36,6 +36,7 @@ const COMMENT = 'COMMENT';
 const SELECT_POST = 'SELECT_POST';
 const SELECT_COMMENT = 'SELECT_COMMENT';
 const GET_SESSION = "GET_SESSION";
+const RESET_SESSION = "RESET_SESSION";
 
 // post 
 const RETRIEVE_POSTS = "RETRIEVE_POSTS";
@@ -60,6 +61,12 @@ export const getSession = () => {
                 return { user_id: response.data.id, first_name: response.data.firstName, last_name: response.data.lastName, prof_pic: response.data.profilePic, is_Admin: response.data.isAdmin, email_verif: response.data.isVerified };
             })
     };
+};
+export const resetSession = (initialState) => {
+    return {
+        type: RESET_SESSION,
+        payload: initialState
+    }
 };
 export const selectPost = (post) => {
     return {
@@ -118,6 +125,10 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 ...payload
+            }
+        case RESET_SESSION:
+            return {
+                ...initialState
             }
         case COMMENT:
             return {
