@@ -9,8 +9,8 @@ header {
   align-items: center;
   align-content: center;
   position: sticky;
-  margin-top: 0px;
   z-index: 1;
+  margin-top: 0px;
 }
 
 .logo {
