@@ -60,7 +60,7 @@ CREATE TABLE comment_img (
 );
 
 CREATE TABLE chat (
-  chat_id SERIAL PRIMARY KEY
+  chat_id SERIAL PRIMARY KEY,
 );
 
 CREATE TABLE chat_message (
