@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-import { resetSession } from './../../ducks/reducer';
+import { getSession, resetSession } from './../../ducks/reducer';
 import Swal from "sweetalert2";
 import "./Header.css";
 
@@ -16,8 +16,9 @@ class Header extends Component {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.getUser();
+    this.props.getSession();
   };
   getUser() {
     axios.get("/api/session").then(res => {
@@ -31,7 +32,7 @@ class Header extends Component {
 
   logout() {
     axios.delete("/api/logout").then(res => {
-      resetSession();
+      this.props.resetSession();
       Swal.fire({
         icon: "warning",
         title: res.data.message,
@@ -87,4 +88,4 @@ class Header extends Component {
   }
 }
 
-export default connect(null, {})(withRouter(Header));
+export default connect(null, {resetSession, getSession})(withRouter(Header));

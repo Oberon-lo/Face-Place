@@ -20,7 +20,7 @@ class Login extends Component {
     await axios
       .post("/api/login", { email, password })
       .then(res => {
-        getSession()
+        this.props.getSession();
         Swal.fire({
           icon: "success",
           title: "Logged in!",
