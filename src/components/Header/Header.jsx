@@ -4,13 +4,34 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 import {connect} from 'react-redux'
-import {getSession} from './../../ducks/reducer'
+import { getSession } from "../../ducks/reducer";
 import "./Header.css";
 
 class Header extends Component {
-componentDidMount(){
-  // getSession()
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      profPic: "",
+      firstName: "",
+      lastName: ""
+    };
+  }
+
+  componentDidMount = async() => {
+    await this.getUser();
+    getSession()
+  };
+  getUser() {
+    axios.get("/api/session").then(res => {
+      this.setState({
+        id: res.data.id,
+        profPic: res.data.profilePic,
+        firstName: res.data.firstName,
+        lastName: res.data.lastName
+      });
+    });
+  }
 
   logout() {
     axios.delete("/api/logout").then(res =>{
@@ -34,11 +55,11 @@ componentDidMount(){
   }
 
 myProfile(){
-this.props.history.push(`/profile/${this.props.user_id}`)
+this.props.history.push(`/myProfile/${this.state.id}`)
 }
 
   render() {
-    const { profPic, firstName, lastName } = this.props;
+    const { profPic, firstName, lastName } = this.state;
     return (
       <header>
         <div className="logo">
@@ -57,9 +78,7 @@ this.props.history.push(`/profile/${this.props.user_id}`)
           <Link to="/home">
             <button>Home</button>
           </Link>
-          <Link to="/profile">
-            <button>My Profile</button>
-          </Link>
+            <button onClick = {() => this.myProfile()}>My Profile</button>
           <button onClick={() => this.logout()}>Logout</button>
         </nav>
         <div className="header-prof">
@@ -73,11 +92,5 @@ this.props.history.push(`/profile/${this.props.user_id}`)
   }
 }
 
-function mapStateToProps(reduxState){
-  const { user_id, first_name, last_name, prof_pic} = reduxState
-  return {
-    user_id, firstName: first_name, lastName: last_name, profPic: prof_pic
-  }
-}
 
-export default connect()(withRouter(Header));
+export default connect(null, {getSession})(withRouter(Header));

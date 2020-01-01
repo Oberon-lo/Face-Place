@@ -11,6 +11,6 @@ export default (
         <Route path='/home' component={Home}/>
         <Route exact path='/' component={Login}/>
         <Route path='/register' component={Register}/>
-        <Route path='/profile/:id' component={ProfPage}/>
+        <Route path='/myProfile/:id' component={ProfPage}/>
     </Switch>
 );

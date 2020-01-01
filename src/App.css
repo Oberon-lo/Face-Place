@@ -4,3 +4,8 @@
 .body{
   min-height: 92vh;
 }
+header {
+  position: sticky;
+  z-index: 1;
+  top: 0px;
+}

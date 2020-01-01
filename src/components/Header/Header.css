@@ -8,9 +8,6 @@ header {
   justify-content: space-around;
   align-items: center;
   align-content: center;
-  position: sticky;
-  margin-top: 0px;
-  z-index: 1;
 }
 
 .logo {

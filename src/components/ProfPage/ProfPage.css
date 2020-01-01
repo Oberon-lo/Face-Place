@@ -1,0 +1,62 @@
+.ProfPage {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+.mainbox {
+  /* height: 40vh; */
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+  margin-top: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+}
+.mypics {
+  height: 40vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.coverPic {
+  max-height: 35vh;
+  min-width: 90%;
+}
+.myPic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: grey;
+}
+.name{
+  width: 90vw;
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+.userStuffs {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  align-content: center;
+}

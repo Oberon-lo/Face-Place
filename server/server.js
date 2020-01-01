@@ -51,13 +51,14 @@ app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.delete("/api/logout", auth.logout);
 app.put("/api/email/:id", auth.emailVerif);
-app.get("/api/session", userCtrl.getUserInfo)
+app.get("/api/session", userCtrl.getUserSession)
 
-// USER EDIT ENDPOINTS \\
+// USER ENDPOINTS \\
 app.put("/api/name/:id", userCtrl.userName);
 app.put("/api/profilePic/:id", userCtrl.prof_pic);
 app.put("/api/bio/:id", userCtrl.bio);
 app.put("/api/cover/:id", userCtrl.coverPic);
+app.get("/api/userInfo/:id", userCtrl.getUserInfo)
 
 // POST ENDPOINTS \\
 app.get('/posts/all/:user_id', postCtrl.getAll);
