@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Post from '../PostDisplay/Post';
+import ChatThread from '../Chat/ChatThread';
 
 export default class Home extends Component {
     render(){
@@ -7,6 +8,7 @@ export default class Home extends Component {
             <div>
                 Home
                 <Post/>
+                <ChatThread/>
             </div>
         )
     }

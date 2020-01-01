@@ -6,6 +6,8 @@ const initialState = {
     password: '',
     prof_pic: '',
     chat_cont: '',
+    chat_id: '',
+    messages: [],
     img: '',
     post_img: [], 
     post_cont: '',
@@ -25,6 +27,7 @@ const LOGIN = 'LOGIN';
 // const REGISTER = 'REGISTER';
 const POST = 'POST';
 const COMMENT = 'COMMENT';
+const CHAT = 'CHAT';
 const SELECT_POST = 'SELECT_POST';
 const SELECT_COMMENT = 'SELECT_COMMENT';
 
@@ -73,6 +76,15 @@ export const selectComment = (comment) => {
             com_cont: comment.com_cont,
             img: comment.img,
             selected_comment: comment
+        }
+    }
+}
+export const chat = (chat_cont, img) => {
+    return{
+        type: CHAT,
+        payload: {
+            chat_cont: chat_cont,
+            img: img
         }
     }
 }
