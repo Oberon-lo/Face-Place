@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { resetSession } from './../../ducks/reducer';
 import Swal from "sweetalert2";
 import "./Header.css";
 
@@ -29,13 +30,14 @@ class Header extends Component {
   }
 
   logout() {
-    axios.delete("/api/logout").then(
+    axios.delete("/api/logout").then(res => {
+      resetSession();
       Swal.fire({
         icon: "warning",
         title: "Logged Out.",
-        text: "Come Back Soon!",
+        text: res.data.message,
         confirmButtonText: "Continue",
-        timer: 1500,
+        timer: 1200,
         timerProgressBar: true
       }).then(result => {
         if (result.value) {
@@ -46,7 +48,7 @@ class Header extends Component {
           window.location.reload();
         }
       })
-    );
+    });
   }
 
   render() {
@@ -54,7 +56,7 @@ class Header extends Component {
     return (
       <header>
         <div className="logo">
-          <Link to="/">
+          <Link to="/home">
             <img
               className="logo-pic"
               src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico"
@@ -62,7 +64,7 @@ class Header extends Component {
             />
           </Link>
           <h1>
-            <Link to="/">FacePlace!</Link>
+            <Link to="/home">FacePlace!</Link>
           </h1>
         </div>
         <nav className="bar">
@@ -84,4 +86,5 @@ class Header extends Component {
     );
   }
 }
-export default withRouter(Header);
+
+export default connect(null, {})(withRouter(Header));

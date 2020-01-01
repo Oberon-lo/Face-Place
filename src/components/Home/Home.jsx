@@ -9,7 +9,9 @@ const Home = (props) => {
     const [offset, setOffset] = useState(0);
 
     useEffect(() => {
-        postGetter();
+        if (props.user_id !== 0) {
+            postGetter();
+        }
     }, [props.user_id])
     
     function postGetter() {
