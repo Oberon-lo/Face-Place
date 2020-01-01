@@ -3,39 +3,23 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
+import {connect} from 'react-redux'
+import {getSession} from './../../ducks/reducer'
 import "./Header.css";
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profPic: "",
-      firstName: "",
-      lastName: ""
-    };
-  }
-
-  componentDidMount = () => {
-    this.getUser();
-  };
-  getUser() {
-    axios.get("/api/session").then(res => {
-      this.setState({
-        profPic: res.data.profilePic,
-        firstName: res.data.firstName,
-        lastName: res.data.lastName
-      });
-    });
-  }
+componentDidMount(){
+  // getSession()
+}
 
   logout() {
-    axios.delete("/api/logout").then(
+    axios.delete("/api/logout").then(res =>{
       Swal.fire({
         icon: "warning",
-        title: "Logged Out.",
+        title: res.data.message,
         text: "Come Back Soon!",
         confirmButtonText: "Continue",
-        timer: 1500,
+        timer: 1200,
         timerProgressBar: true
       }).then(result => {
         if (result.value) {
@@ -45,12 +29,16 @@ class Header extends Component {
           this.props.history.push("/");
           window.location.reload();
         }
-      })
-    );
+      });
+    });
   }
 
+myProfile(){
+this.props.history.push(`/profile/${this.props.user_id}`)
+}
+
   render() {
-    const { profPic, firstName, lastName } = this.state;
+    const { profPic, firstName, lastName } = this.props;
     return (
       <header>
         <div className="logo">
@@ -72,7 +60,7 @@ class Header extends Component {
           <Link to="/profile">
             <button>My Profile</button>
           </Link>
-          <button onClick = {() => this.logout() }>Logout</button>
+          <button onClick={() => this.logout()}>Logout</button>
         </nav>
         <div className="header-prof">
           <img src={profPic} alt="oops" className="profilepic-header" />
@@ -84,4 +72,12 @@ class Header extends Component {
     );
   }
 }
-export default withRouter(Header);
+
+function mapStateToProps(reduxState){
+  const { user_id, first_name, last_name, prof_pic} = reduxState
+  return {
+    user_id, firstName: first_name, lastName: last_name, profPic: prof_pic
+  }
+}
+
+export default connect()(withRouter(Header));

@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 
 class ProfPage extends Component {
+  constructor(props) {
+    super(props);
+    
+  }
+  
+  componentDidMount(){
+
+  }
+  
+
   render() {
     return <div>
-      <button onClick = {() => {console.log('hit');
-      } }>
-      ProfPage
-      </button>
+      
       </div>;
   }
 }
