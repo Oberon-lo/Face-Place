@@ -83,7 +83,7 @@ export default class ChatRail extends Component {
             <div>
                 Chat
            <div className='chatContent'>{users.map(u => 
-           <Link to='/chat'>
+           <Link key={u.user_id}  to='/chat'>
                <div onClick={() => this.startConvo(u.user_id)}>{`${u.first_name} ${u.last_name}`}</div>
            </Link>
                )}</div>
