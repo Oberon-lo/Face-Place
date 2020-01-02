@@ -83,6 +83,6 @@ massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
   console.log("TAC-COM ONLINE");
   app.listen(SERVER_PORT, () =>
-    console.log(`${SERVER_PORT} BOTTLES OF ON THE WALL!!!`)
+    console.log(`${SERVER_PORT} BOTTLES OF (undefined) ON THE WALL!!!`)
   );
 });
