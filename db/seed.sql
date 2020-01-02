@@ -61,6 +61,7 @@ CREATE TABLE comment_img (
 
 CREATE TABLE chat (
   chat_id SERIAL PRIMARY KEY,
+  title VARCHAR(50)
 );
 
 CREATE TABLE chat_message (
