@@ -1,27 +1,31 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { connect } from "react-redux";
-import { resetSession } from './../../ducks/reducer';
+import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
+import {connect} from 'react-redux'
+import { getSession } from "../../ducks/reducer";
 import "./Header.css";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       profPic: "",
       firstName: "",
       lastName: ""
     };
   }
 
-  componentDidMount = () => {
-    this.getUser();
+  componentDidMount = async() => {
+    await this.getUser();
+    getSession()
   };
   getUser() {
     axios.get("/api/session").then(res => {
       this.setState({
+        id: res.data.id,
         profPic: res.data.profilePic,
         firstName: res.data.firstName,
         lastName: res.data.lastName
@@ -30,8 +34,7 @@ class Header extends Component {
   }
 
   logout() {
-    axios.delete("/api/logout").then(res => {
-      resetSession();
+    axios.delete("/api/logout").then(res =>{
       Swal.fire({
         icon: "warning",
         title: res.data.message,
@@ -47,16 +50,20 @@ class Header extends Component {
           this.props.history.push("/");
           window.location.reload();
         }
-      })
+      });
     });
   }
+
+myProfile(){
+this.props.history.push(`/myProfile/${this.state.id}`)
+}
 
   render() {
     const { profPic, firstName, lastName } = this.state;
     return (
       <header>
         <div className="logo">
-          <Link to="/home">
+          <Link to="/">
             <img
               className="logo-pic"
               src="https://helios-devmountain-group-project.s3-us-west-1.amazonaws.com/anime-face-png-7403-256x256.ico"
@@ -64,17 +71,15 @@ class Header extends Component {
             />
           </Link>
           <h1>
-            <Link to="/home">FacePlace!</Link>
+            <Link to="/">FacePlace!</Link>
           </h1>
         </div>
         <nav className="bar">
           <Link to="/home">
             <button>Home</button>
           </Link>
-          <Link to="/profile">
-            <button>My Profile</button>
-          </Link>
-          <button onClick = {() => this.logout() }>Logout</button>
+            <button onClick = {() => this.myProfile()}>My Profile</button>
+          <button onClick={() => this.logout()}>Logout</button>
         </nav>
         <div className="header-prof">
           <img src={profPic} alt="oops" className="profilepic-header" />
@@ -87,4 +92,5 @@ class Header extends Component {
   }
 }
 
-export default connect(null, {})(withRouter(Header));
+
+export default connect(null, {getSession})(withRouter(Header));

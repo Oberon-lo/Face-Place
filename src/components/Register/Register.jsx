@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import './Register.css'
+import "./Register.css";
 
 class Register extends Component {
   constructor(props) {
@@ -23,7 +23,13 @@ class Register extends Component {
 
   finalize = () => {
     const { email, password, first_name, last_name, password2 } = this.state;
-    if (email && password && first_name && last_name && password === password2) {
+    if (
+      email &&
+      password &&
+      first_name &&
+      last_name &&
+      password === password2
+    ) {
       axios
         .post("/api/register", { email, password, first_name, last_name })
         .then(
@@ -56,9 +62,11 @@ class Register extends Component {
   render() {
     const { email, first_name, last_name, password, password2 } = this.state;
     return (
-      <div className = 'register'>
+      <div className="register">
         <div className="form">
-          <h2>Thank You For Choosing <br/> Face-Place.</h2>
+          <h2>
+            Thank You For Choosing <br /> Face-Place.
+          </h2>
           <div className="top-bit">
             <div className="register-right">
               <input
@@ -105,9 +113,11 @@ class Register extends Component {
               <br />
             </div>
           </div>
-              <button onClick={() => this.finalize()} className = 'register-button'>Create Account!</button>
-            <span>Already registered? </span>
-            <Link to="/">Login here!</Link>
+          <button onClick={() => this.finalize()} className="register-button">
+            Create Account!
+          </button>
+          <span>Already registered? </span>
+          <Link to="/">Login here!</Link>
         </div>
       </div>
     );
