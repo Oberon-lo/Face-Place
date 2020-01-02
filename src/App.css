@@ -4,6 +4,12 @@
 .body{
   min-height: 92vh;
 }
+<<<<<<< HEAD
+header {
+  position: sticky;
+  z-index: 2;
+  top: 0px;
+=======
 .page{
   display: flex;
   justify-content: space-between;
@@ -31,4 +37,5 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
+>>>>>>> master
 }

@@ -57,7 +57,7 @@ export const getSession = () => {
         type: GET_SESSION,
         payload: axios.get(`/api/session`)
             .then(response => {
-                console.log('hit----', response.data);
+                // console.log('hit----', response.data);
                 return { user_id: response.data.id, first_name: response.data.firstName, last_name: response.data.lastName, prof_pic: response.data.profilePic, is_Admin: response.data.isAdmin, email_verif: response.data.isVerified };
             })
     };
