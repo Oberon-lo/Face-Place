@@ -18,7 +18,6 @@ class MyProfPage extends Component {
       lastName: "",
       bio: "",
       toggle: false,
-      isUploading: false
     };
   }
 
@@ -61,7 +60,7 @@ class MyProfPage extends Component {
         <div className="mainBox" key={id}>
           <div className="userPics">
             <img src={coverPic} alt="oops" className="coverPic" />
-            {!toggle ? (
+            {toggle ? (
               <button
                 className="profEdit-button"
                 onClick={() => this.toggleEdit()}
@@ -70,7 +69,12 @@ class MyProfPage extends Component {
               </button>
             ) : (
               <EditProf
-                text="click close button"
+              id = {id}
+              coverPic = {coverPic}
+              firstName = {firstName}
+              lastName = {lastName}
+              bio = {bio}
+              profPic = {profPic}
                 closePopup={() => this.toggleEdit()}
               />
             )}
