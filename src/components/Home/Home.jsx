@@ -3,6 +3,7 @@ import Post from './../PostDisplay/Post';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {retrievePosts, getSession} from '../../ducks/reducer';
+import ChatRail from '../Chat/ChatRail';
 
 
 const Home = (props) => {
@@ -21,8 +22,10 @@ const Home = (props) => {
     
 
     return (
-        <div>
+        <div className='page'>
+            <div className='content'>
             HOME
+            <p>dummy data dummy data dummy data o;rhgnaewafvprgjohrfj;reg;gljfhrtoe4wjf</p>
             {
                 props.postArr.map((post, i) => (
                     <div key={i} className="post-container">
@@ -30,6 +33,10 @@ const Home = (props) => {
                     </div>
                 ))
             }
+            </div>
+            <div className='chat'>
+                <ChatRail/>
+            </div>
         </div>
     );
 };
