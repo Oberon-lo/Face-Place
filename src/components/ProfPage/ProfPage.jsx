@@ -28,26 +28,27 @@ class ProfPage extends Component {
     const user = this.state.userInfo;
     return (
       <div className="ProfPage">
-        <div className="mainbox" key={user.id}>
-          <div className="mypics">
+        
+        <div className="mainBox" key={user.id}>
+          <div className="userPics">
             <img src={user.cover_pic} alt="oops" className="coverPic" />
             
-            <img src={user.prof_pic} alt="oops" className="myPic" />
-            
+            <img src={user.prof_pic} alt="oops" className="profPic" />
           </div>
-          <div className="userStuffs">
+            <div className="userStuffs">
               <h2>
                 {user.first_name} {user.last_name}{" "}
               </h2>
-            <h3>{user.bio}</h3>
-          </div>
+              <h3>{user.bio}</h3>
+            </div>
         </div>
-        <div className="lowerBox"></div>
+          <div className="lowerBox"></div>
+
       <div className='chat'>
         <ChatRail/>
       </div>
       </div>
-    )
+    );
   }
 }
 

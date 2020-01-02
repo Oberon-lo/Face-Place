@@ -3,6 +3,7 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
+import './EditProf.css';
 
 class EditProf extends Component {
   constructor(props) {
@@ -67,6 +68,8 @@ class EditProf extends Component {
 
   render() {
     return (
+        <div className='popup'>
+        <div className='popup_inner'>
       <div className="dropContainer">
         <Dropzone
           onDropAccepted={this.getSignedRequest}
@@ -94,8 +97,14 @@ class EditProf extends Component {
           )}
         </Dropzone>
       </div>
+
+        <h1>{this.props.text}</h1>
+      <button onClick={this.props.closePopup}>confirm changes</button>
+      </div>
+    </div>
     );
   }
 }
 
 export default EditProf;
+

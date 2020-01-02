@@ -8,12 +8,6 @@ header {
   justify-content: space-around;
   align-items: center;
   align-content: center;
-<<<<<<< HEAD
-=======
-  position: sticky;
-  z-index: 1;
-  margin-top: 0px;
->>>>>>> master
 }
 
 .logo {
@@ -37,12 +31,12 @@ header {
 .bar button {
   padding: 10px;
   font-size: 18px;
-  background: rgba(219, 227, 231, 1);
+  background: rgba(219, 227, 231, .75);
   margin: 5px;
   border-color: rgba(219, 227, 231, 0);
 }
 .bar button:hover{
-  background-color: yellow;
+  background: rgba(219, 227, 231, 1);
 }
 .header-prof {
   display: flex;

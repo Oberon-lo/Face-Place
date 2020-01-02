@@ -1,17 +1,16 @@
 .App {
   text-align: center;
+  /* background-color: #CDCDCD; */
 }
 .body{
   min-height: 92vh;
 }
-<<<<<<< HEAD
 header {
   position: sticky;
   z-index: 2;
-  top: 0px;
-=======
-.page{
-  display: flex;
+  top: 0px;}
+  .page{
+    display: flex;
   justify-content: space-between;
   max-width: 100vw;
 }
@@ -37,5 +36,4 @@ header {
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
->>>>>>> master
 }
