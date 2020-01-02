@@ -2,13 +2,16 @@ import React from 'react';
 import Post from './../PostDisplay/Post';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {retrievePosts, getSession} from '../../ducks/reducer';
+import { getSession } from '../../ducks/reducer';
+import axios from 'axios';
 // import PostMaker from './../PostMaker/PostMaker';
 import './Home.css';
 
 
 const Home = (props) => {
     const [offset, setOffset] = useState(0);
+    const [postArr, addPostArr] = useState([]);
+
 
     useEffect(() => {
         if (props.user_id !== 0) {
@@ -16,19 +19,22 @@ const Home = (props) => {
         }
     }, [props.user_id])
 
-    useEffect(() => {}, [props.postArr])
 
-    async function postGetter () {
-        await retrievePosts(props.user_id, offset);
+    async function postGetter() {
+        await axios
+            .get(`/posts/all/${props.user_id}`)
+            .then(response => {
+                console.log(response.data);
+                addPostArr([...postArr, ...response.data])
+            })
         setOffset(offset + 5);
     }
-    const postDisplayer = props.postArr.map((post, i) => (
+    const postDisplayer = postArr.map((post, i) => (
         <div key={i} className="post-container">
             <Post post={post} />
         </div>
     ))
-    
-    console.log("Home hit----------", props.postArr);
+
     return (
         <div className="Home">
             {/* <PostMaker /> */}
@@ -38,11 +44,10 @@ const Home = (props) => {
 };
 
 function mapStateToProps(reduxState) {
-    const { user_id, postArr } = reduxState;
+    const { user_id } = reduxState;
     return {
-        user_id,
-        postArr
+        user_id
     }
 }
 
-export default connect(mapStateToProps, {retrievePosts, getSession})(Home);
+export default connect(mapStateToProps, { getSession })(Home);

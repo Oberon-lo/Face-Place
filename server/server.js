@@ -46,6 +46,24 @@ app.get("/api/users", userCtrl.getAllUsers);
 app.post("/api/send", nodemailer.nodemailer);
 app.get("/sign-s3", s3Ctrl.s3);
 
+//WEBSOCKET ENDPOINTS\\
+const socketServer = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
+socketServer.on('connection', function(conn) {
+  console.log('connection opened');
+  conn.on('data', function(message) {
+    console.log('Incoming message', message);
+    conn.write(message);
+    // conn.close();
+  });
+  conn.on('close', function() {
+    console.log('connection closed');
+  });
+});
+const server = http.createServer(app);
+socketServer.installHandlers(server, {prefix: '/sockets/chat'});
+server.listen(SERVER_PORT, '0.0.0.0');
+
+
 
 
 // AUTH / SESSION \\
@@ -89,19 +107,3 @@ massive(CONNECTION_STRING).then(db => {
   );
 });
 
-//WEBSOCKET ENDPOINTS\\
-const socketServer = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
-socketServer.on('connection', function(conn) {
-  console.log('connection opened');
-  conn.on('data', function(message) {
-    console.log('Incoming message', message);
-    conn.write(message);
-    // conn.close();
-  });
-  conn.on('close', function() {
-    console.log('connection closed');
-  });
-});
-const server = http.createServer(app);
-socketServer.installHandlers(server, {prefix: '/sockets/chat'});
-server.listen(SERVER_PORT, '0.0.0.0');

@@ -15,7 +15,6 @@ const initialState = {
   chat_cont: '',
   img: '',
   //post
-  postArr: [],
   post_img: [],
   post_cont: '',
   //comment
@@ -39,8 +38,8 @@ const GET_SESSION = 'GET_SESSION';
 const RESET_SESSION = 'RESET_SESSION';
 
 // post 
-const RETRIEVE_POSTS = 'RETRIEVE_POSTS';
 const POST_CONTENT_HANDLER = 'POST CONTENT_HANDLER';
+const POST_RESETTER = 'POST_RESETTER';
 
 
 // ACTION BUILDERS \\
@@ -53,13 +52,7 @@ export const setAuthenticated = (hasAuth, userObj) => {
     }
   };
 };
-export function getSession() {
-  return {
-    type: GET_SESSION,
-    payload: axios.get(`/api/session`)
-      .then(response => response.data)
-  };
-};
+
 export const resetSession = (initialState) => {
   return {
     type: RESET_SESSION,
@@ -95,18 +88,24 @@ export const selectComment = (comment) => {
     }
   };
 };
-// post
-export function retrievePosts(user_id, offset) {
+export function getSession() {
   return {
-    type: RETRIEVE_POSTS,
-    payload: axios.get(`/posts/all/${user_id}`, offset)
+    type: GET_SESSION,
+    payload: axios.get(`/api/session`)
       .then(response => response.data)
   };
 };
+// post
 export const postContentHandler = (post_cont) => {
   return {
     type: POST_CONTENT_HANDLER,
     payload: post_cont
+  };
+};
+export function postResetter() {
+  return {
+    type: POST_RESETTER,
+    payload: null
   };
 };
 
@@ -118,53 +117,53 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...payload
-      }
+      };
     case LOGIN:
       return {
         ...state,
         ...payload
-      }
+      };
     case GET_SESSION + '_FULFILLED':
       return {
-        ...state,
+        ...state, 
         user_id: payload.id,
         first_name: payload.firstName,
         last_name: payload.lastName,
         prof_pic: payload.profilePic,
         email_verif: payload.isVerified,
         is_Admin: payload.isAdmin
-      }
+      };
     case RESET_SESSION:
       return {
         ...initialState
-      }
+      };
     case COMMENT:
       return {
         ...state,
         ...payload
-      }
+      };
     case SELECT_POST:
       return {
         ...state,
         ...payload
-      }
+      };
     case SELECT_COMMENT:
       return {
         ...state,
         ...payload
-      }
+      };
     //post
-    case RETRIEVE_POSTS + '_FULFILLED':
-      console.log("posts case hit-------------");
-      return {
-        ...state,
-        postArr: [...this.postArr, ...payload]
-      }
     case POST_CONTENT_HANDLER:
       return {
         ...state,
         ...payload
-      }
+      };
+    case POST_RESETTER:
+      return {
+        ...state,
+        post_cont: '',
+        post_img: []
+      };
     default: return state
   };
 };
