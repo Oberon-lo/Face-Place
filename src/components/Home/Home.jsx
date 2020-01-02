@@ -6,6 +6,7 @@ import { getSession } from '../../ducks/reducer';
 import axios from 'axios';
 // import PostMaker from './../PostMaker/PostMaker';
 import './Home.css';
+import ChatRail from '../Chat/ChatRail';
 
 
 const Home = (props) => {
@@ -36,9 +37,16 @@ const Home = (props) => {
     ))
 
     return (
-        <div className="Home">
-            {/* <PostMaker /> */}
-            {postDisplayer}
+        <div className='Home'>
+            <div className='content'>
+                HOME
+                    <p>dummy data dummy data dummy data o;rhgnaewafvprgjohrfj;reg;gljfhrtoe4wjf</p>
+                {/* <PostMaker /> */}
+                {postDisplayer}
+            </div>
+            <div className='chat'>
+                <ChatRail />
+            </div>
         </div>
     );
 };

@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import SockJS from 'sockjs-client';
 
-
-
-export default class ChatThread extends Component {
+export default class ChatWindow extends Component {
     constructor() {
         super();
         this.state = {
-            chat_id: '',
-            messages: [],
-            userTyping: false,
+
         }
         this.initSocket()
     }
-    //Init websocket connection
-    initSocket = () => {
+     //Init websocket connection
+     initSocket = () => {
         let socket = new SockJS('/sockets/chat');
         console.log('socket object', socket);
         socket.onopen = () => socket.send(JSON.stringify({
@@ -35,12 +31,12 @@ export default class ChatThread extends Component {
         let message = response.data;
         console.log('receiving message', message);
     };
-    render(){
+    render() {
+        return(
+            <div>
+
+            </div>
+        )
+    }
     
-    return(
-        <div>
-            ChatThread
-        </div>
-    )
-}
 }
