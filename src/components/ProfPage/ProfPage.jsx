@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ChatRail from '../Chat/ChatRail';
 import "./ProfPage.css";
 
 class ProfPage extends Component {
@@ -42,8 +43,11 @@ class ProfPage extends Component {
           </div>
         </div>
         <div className="lowerBox"></div>
+      <div className='chat'>
+        <ChatRail/>
       </div>
-    );
+      </div>
+    )
   }
 }
 

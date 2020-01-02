@@ -10,6 +10,8 @@ const postCtrl = require("./controllers/postController.js");
 const comCtrl = require('./controllers/comController.js');
 const userCtrl = require("./controllers/userController.js");
 const s3Ctrl = require('./controllers/s3.js');
+const sockjs = require('sockjs');
+const http = require('http');
 
 const {
   SESSION_SECRET,
@@ -79,6 +81,7 @@ app.put('/post/comment/:com_id', comCtrl.editCom);
 app.delete('/post/comment/:com_id', comCtrl.deleteCom);
 
 
+// const server = 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
   console.log("TAC-COM ONLINE");
@@ -86,3 +89,20 @@ massive(CONNECTION_STRING).then(db => {
     console.log(`${SERVER_PORT} BOTTLES OF (undefined) ON THE WALL!!!`)
   );
 });
+
+//WEBSOCKET ENDPOINTS\\
+const socketServer = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
+socketServer.on('connection', function(conn) {
+  console.log('connection opened');
+  conn.on('data', function(message) {
+    console.log('Incoming message', message);
+    conn.write(message);
+    // conn.close();
+  });
+  conn.on('close', function() {
+    console.log('connection closed');
+  });
+});
+const server = http.createServer(app);
+socketServer.installHandlers(server, {prefix: '/sockets/chat'});
+server.listen(SERVER_PORT, '0.0.0.0');

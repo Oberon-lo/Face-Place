@@ -3,6 +3,7 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
+import ChatRail from '../Chat/ChatRail';
 import "./ProfPage.css";
 
 class MyProfPage extends Component {
@@ -52,7 +53,7 @@ class MyProfPage extends Component {
       <div className="ProfPage">
         {this.state.toggle ? null : 
         <div className="editProfBox">
-          
+
         </div>
         }
         <div className="mainBox" key={id}>
@@ -76,6 +77,10 @@ class MyProfPage extends Component {
               <h3>{bio}</h3>
             </div>
           <div className="lowerBox"></div>
+
+      <div className='chat'>
+        <ChatRail/>
+      </div>
         </div>
       </div>
     );
