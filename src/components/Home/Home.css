@@ -1,0 +1,9 @@
+.Home .content {
+  display: flex;
+  align-items: center;
+}
+
+.Home .post-container {
+  display: flex;
+
+}

@@ -19,10 +19,7 @@ const initialState = {
   post_cont: '',
   //comment
   com_cont: '',
-  // ?
-  selected_post: {},
-  selected_comment: {},
-  current_user: {},
+  com_img: []
 };
 
 // ACTION CONSTANTS \\
@@ -31,15 +28,19 @@ const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
 // const CANCEL = 'CANCEL';
 const LOGIN = 'LOGIN';
 // const REGISTER = 'REGISTER';
-const COMMENT = 'COMMENT';
-const SELECT_POST = 'SELECT_POST';
-const SELECT_COMMENT = 'SELECT_COMMENT';
 const GET_SESSION = 'GET_SESSION';
 const RESET_SESSION = 'RESET_SESSION';
 
 // post 
-const POST_CONTENT_HANDLER = 'POST CONTENT_HANDLER';
+const POST_CONTENT_HANDLER = 'POST_CONTENT_HANDLER';
+const POST_IMG_HANDLER = 'POST_IMG_HANDLER';
 const POST_RESETTER = 'POST_RESETTER';
+const POST_CONT_SELECT = 'POST_CONT_SELECT';
+
+// commments
+const COM_CONTENT_HANDLER = 'COM_CONTENT_HANDLER';
+const COM_IMG_HANDLER = 'COM_IMG_HANDLER';
+const COM_RESETTER = 'COM_RESETTER';
 
 
 // ACTION BUILDERS \\
@@ -59,35 +60,6 @@ export const resetSession = (initialState) => {
     payload: initialState
   }
 };
-export const selectPost = (post) => {
-  return {
-    type: SELECT_POST,
-    payload: {
-      post_cont: post.post_cont,
-      img: post.img,
-      selected_comment: post
-    }
-  };
-};
-export const addComment = (com_cont, img) => {
-  return {
-    type: COMMENT,
-    payload: {
-      com_cont: com_cont,
-      img: img
-    }
-  };
-};
-export const selectComment = (comment) => {
-  return {
-    type: SELECT_COMMENT,
-    payload: {
-      com_cont: comment.com_cont,
-      img: comment.img,
-      selected_comment: comment
-    }
-  };
-};
 export function getSession() {
   return {
     type: GET_SESSION,
@@ -102,10 +74,43 @@ export const postContentHandler = (post_cont) => {
     payload: post_cont
   };
 };
+export function postImgHandler(post_img) {
+  return {
+    type: POST_IMG_HANDLER,
+    payload: post_img
+  };
+};
+export function postContSelect(post_cont) {
+  return {
+    type: POST_CONT_SELECT,
+    payload: post_cont
+  }
+
+}
 export function postResetter() {
   return {
     type: POST_RESETTER,
     payload: null
+  };
+};
+// comments
+export function comResetter() {
+  return {
+    type: COM_RESETTER,
+    payload: null
+  };
+};
+export function comContentHandler(com_cont) {
+  console.log()
+  return {
+    type: COM_CONTENT_HANDLER,
+    payload: com_cont
+  };
+};
+export function comImgHandler(com_img) {
+  return {
+    type: COM_IMG_HANDLER,
+    payload: com_img
   };
 };
 
@@ -137,23 +142,18 @@ export default function (state = initialState, action) {
       return {
         ...initialState
       };
-    case COMMENT:
-      return {
-        ...state,
-        ...payload
-      };
-    case SELECT_POST:
-      return {
-        ...state,
-        ...payload
-      };
-    case SELECT_COMMENT:
-      return {
-        ...state,
-        ...payload
-      };
     //post
     case POST_CONTENT_HANDLER:
+      return {
+        ...state,
+        ...payload
+      };
+    case POST_IMG_HANDLER:
+      return {
+        ...state,
+        ...payload
+      };
+    case POST_CONT_SELECT:
       return {
         ...state,
         ...payload
@@ -163,6 +163,23 @@ export default function (state = initialState, action) {
         ...state,
         post_cont: '',
         post_img: []
+      };
+    // comments
+    case COM_RESETTER:
+      return {
+        ...state,
+        com_cont: '',
+        com_img: []
+      };
+    case COM_CONTENT_HANDLER:
+      return {
+        ...state,
+        ...payload
+      };
+    case COM_IMG_HANDLER:
+      return {
+        ...state,
+        ...payload
       };
     default: return state
   };

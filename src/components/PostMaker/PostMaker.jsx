@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { postContentHandler } from './../../ducks/reducer';
+import { postContentHandler, postResetter } from './../../ducks/reducer';
 import axios from 'axios';
-import AddImage from './../AddImage/AddImage';
+import AddPostImage from '../AddImage/AddPostImage';
 import './PostMaker.css';
 
 const PostMaker = (props) => {
 
   const [imageToggle, setImageToggle] = useState(false)
+  const [postcont, setPost_cont] = useState('');
+  const [imgArr, setImgArr] = useState([]);
 
   // ! TODO: Nate please add sweet alert for post submission.
   function submitPost(body) {
     axios
       .post(`/posts/newPost`, body)
       .then(response => {
-        
-      })
-  }
+        props.addPost([...props.postArr, {user_id: props.user_id, last_name: props.last_name, first_name: props.first_name, prof_pic: props.prof_pic, post_id: response.data.post_id, postcont}]);
+        setPost_cont('');
+      });
+  };
 
   return (
     <div className="PostMaker">
-      <input className="content-input" value={props.post_cont} onChange={e => postContentHandler(e.target.value)} type="text" />
+      <input className="content-input" value={postcont} onChange={e => setPost_cont(e.target.value)} type="text" />
       {imageToggle ?
-        <AddImage />
+        <AddPostImage imgArr={imgArr} setImgArr={setImgArr} />
         :
         null
       }
       <div className="button-bar">
         <button onClick={() => setImageToggle(!imageToggle)} >addImage</button>
-        <button onClick={() => submitPost({ user_id: props.user_id, post_cont: props.post_cont, post_img: props.post_img })} >Post</button>
+        <button onClick={() => submitPost({ user_id: props.user_id, post_cont: postcont, post_img: imgArr })} >Post</button>
       </div>
     </div>
   );
 };
 
 function mapStateToProps(reduxState) {
-  const { user_id, post_cont, post_img } = reduxState;
+  const { user_id, first_name, last_name, prof_pic } = reduxState;
   return {
     user_id,
-    post_cont,
-    post_img
+    first_name,
+    last_name,
+    prof_pic,
   }
 }
 
-export default connect(mapStateToProps, { postContentHandler })(PostMaker);
+export default connect(mapStateToProps, { postContentHandler, postResetter })(PostMaker);

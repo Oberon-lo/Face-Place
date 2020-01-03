@@ -93,7 +93,7 @@ app.delete('/post/:post_id', postCtrl.deletePost);
 // COMMENT ENDPOINTS \\
 app.get('/post/comments/:post_id', comCtrl.getCom);
 app.get('/post/comments/img/:com_id', comCtrl.getComImg);
-app.post('/post/newCom/:post_id', comCtrl.makeCom);
+app.post('/post/comments/:post_id', comCtrl.makeCom);
 app.put('/post/comment/:com_id', comCtrl.editCom);
 // app.delete('/post/comment/img/:comment_img_id', comCtrl.deleteComImg);
 app.delete('/post/comment/:com_id', comCtrl.deleteCom);

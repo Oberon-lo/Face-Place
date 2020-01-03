@@ -1,12 +1,12 @@
 import React from 'react';
-import Post from './../PostDisplay/Post';
+import Post from '../PostDisplay/Post/Post';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getSession } from '../../ducks/reducer';
 import axios from 'axios';
-// import PostMaker from './../PostMaker/PostMaker';
+import PostMaker from './../PostMaker/PostMaker';
 import './Home.css';
-import ChatRail from '../Chat/ChatRail';
+// import ChatRail from '../Chat/ChatRail';
 
 
 const Home = (props) => {
@@ -20,16 +20,16 @@ const Home = (props) => {
         }
     }, [props.user_id])
 
-
     async function postGetter() {
         await axios
             .get(`/posts/all/${props.user_id}`)
             .then(response => {
-                console.log(response.data);
                 addPostArr([...postArr, ...response.data])
             })
         setOffset(offset + 5);
     }
+
+
     const postDisplayer = postArr.map((post, i) => (
         <div key={i} className="post-container">
             <Post post={post} />
@@ -40,13 +40,13 @@ const Home = (props) => {
         <div className='Home'>
             <div className='content'>
                 HOME
-                    <p>dummy data dummy data dummy data o;rhgnaewafvprgjohrfj;reg;gljfhrtoe4wjf</p>
-                {/* <PostMaker /> */}
+                    {/* <p>dummy data dummy data dummy data o;rhgnaewafvprgjohrfj;reg;gljfhrtoe4wjf</p> */}
+                <PostMaker postArr={postArr} addPost={addPostArr} />
                 {postDisplayer}
             </div>
-            <div className='chat'>
+            {/* <div className='chat'>
                 <ChatRail />
-            </div>
+            </div> */}
         </div>
     );
 };
