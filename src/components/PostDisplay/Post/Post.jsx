@@ -7,7 +7,7 @@ import ComMaker from "../ComMaker/ComMaker";
 import ImageViewer from "./../ImageViewer/ImageViewer";
 import ImageEditor from "./../ImageEditor/ImageEditor";
 import "./Post.css";
-import { Swal } from "sweetalert2";
+import Swal from "sweetalert2";
 
 const Post = props => {
   const {
