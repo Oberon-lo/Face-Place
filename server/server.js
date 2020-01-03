@@ -17,6 +17,9 @@ const http = require('http');
 const {
   SESSION_SECRET,
   PASSWORD,
+  S3_BUCKET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
   SERVER_PORT,
   CONNECTION_STRING
 } = process.env;
@@ -45,7 +48,41 @@ app.get("/api/users", userCtrl.getAllUsers);
 
 // NODEMAILER / s3 \\
 app.post("/api/send", nodemailer.nodemailer);
-app.get("/sign-s3", s3Ctrl.s3);
+
+app.get("/sign-s3", (req, res) => {
+  aws.config = {
+    region: "us-west-1",
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY
+  };
+// console.log('hit1');
+
+  const s3 = new aws.S3();
+  const fileName = req.query["file-name"];
+  const fileType = req.query["file-type"];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 365 * 2,
+    ContentType: fileType,
+    ACL: "public-read"
+  };
+
+  s3.getSignedUrl("putObject", s3Params, (err, data) => {
+    if (err) {
+      console.log(err);
+      // console.log('hit2');
+      
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+
+    return res.send(returnData);
+  });
+});
 
 
 // AUTH / SESSION \\
@@ -56,11 +93,11 @@ app.put("/api/email/:id", auth.emailVerif);
 app.get("/api/session", userCtrl.getUserSession)
 
 // USER ENDPOINTS \\
-app.put("/api/name/:id", userCtrl.userName);
-app.put("/api/profilePic/:id", userCtrl.prof_pic);
-app.put("/api/bio/:id", userCtrl.bio);
-app.put("/api/cover/:id", userCtrl.coverPic);
 app.get("/api/userInfo/:id", userCtrl.getUserInfo)
+app.put(`/api/user1/:id`, userCtrl.updateUser);
+app.put(`/api/user2/:id`, userCtrl.updateUser2);
+app.put(`/api/user3/:id`, userCtrl.updateUser3);
+app.put(`/api/user4/:id`, userCtrl.updateUser4);
 
 // POST ENDPOINTS \\
 app.get('/posts/all/:user_id', postCtrl.getAll);
@@ -89,7 +126,7 @@ app.post('/userchat', chatCtrl.createUserChat);
 
 // SOCKET STUFF \\
 
-getMessages_socket = (db, parcel, conn) => {
+const getMessages_socket = (db, parcel, conn) => {
   chatCtrl.getMessagesSocket(db, parcel.data.current_chat_id)
     .then(messages => {
       // console.log('******** retrieved messages from db', messages);    
@@ -100,13 +137,13 @@ getMessages_socket = (db, parcel, conn) => {
     })
 }
 
-newMessage_socket = (db, parcel, conn) => {
+const newMessage_socket = (db, parcel, conn) => {
   chatCtrl.addMessageSocket(db, parcel).then(response => {
     broadcastMessages_socket(db, parcel);
   })
 }
 
-broadcastMessages_socket = (db, parcel) => {
+const broadcastMessages_socket = (db, parcel) => {
   console.log('broadcast chat id', parcel.data.current_chat_id)
   SOCKET_CONNECTIONS[parcel.data.current_chat_id].forEach(sockConn => {
     getMessages_socket(db, parcel, sockConn);
