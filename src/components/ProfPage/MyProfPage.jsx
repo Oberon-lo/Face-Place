@@ -90,10 +90,10 @@ class MyProfPage extends Component {
           </div>
           <div className="lowerBox"></div>
 
-          {/* <div className='chat'>
-        <ChatRail/>
-      </div> */}
         </div>
+          <div className='chat'>
+        <ChatRail/>
+      </div>
       </div>
     );
   }
