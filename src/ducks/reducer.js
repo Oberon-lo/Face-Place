@@ -30,6 +30,9 @@ const LOGIN = 'LOGIN';
 // const REGISTER = 'REGISTER';
 const GET_SESSION = 'GET_SESSION';
 const RESET_SESSION = 'RESET_SESSION';
+const GET_SESSION = "GET_SESSION";
+const RESET_SESSION = "RESET_SESSION";
+const SET_CURRENT_CHAT = "SET_CURRENT_CHAT";
 
 // post 
 const POST_CONTENT_HANDLER = 'POST_CONTENT_HANDLER';
@@ -53,7 +56,15 @@ export const setAuthenticated = (hasAuth, userObj) => {
     }
   };
 };
-
+export const setCurrentChat = (user_id, chat_id) => {
+  return {
+    type: SET_CURRENT_CHAT,
+    payload: {
+      user_id: user_id,
+      current_chat_id: chat_id
+    }
+  };
+};
 export const resetSession = (initialState) => {
   return {
     type: RESET_SESSION,
@@ -130,7 +141,7 @@ export default function (state = initialState, action) {
       };
     case GET_SESSION + '_FULFILLED':
       return {
-        ...state, 
+        ...state,
         user_id: payload.id,
         first_name: payload.firstName,
         last_name: payload.lastName,
@@ -138,6 +149,11 @@ export default function (state = initialState, action) {
         email_verif: payload.isVerified,
         is_Admin: payload.isAdmin
       };
+    case SET_CURRENT_CHAT:
+      return {
+        ...state,
+        ...payload
+      }
     case RESET_SESSION:
       return {
         ...initialState

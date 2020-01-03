@@ -3,7 +3,8 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
-import ChatRail from '../Chat/ChatRail';
+import ChatRail from "../Chat/ChatRail";
+import EditProf from "./EditProf";
 import "./ProfPage.css";
 
 class MyProfPage extends Component {
@@ -16,8 +17,7 @@ class MyProfPage extends Component {
       firstName: "",
       lastName: "",
       bio: "",
-      toggle: false,
-      isUploading: false
+      toggle: false
     };
   }
 
@@ -27,9 +27,9 @@ class MyProfPage extends Component {
 
   getInfo() {
     axios.get(`/api/userInfo/${this.props.match.params.id}`).then(res => {
-      console.log("hit", res.data[0]);
+      // console.log("hit", res.data[0]);
       this.setState({
-        id: res.data[0].id,
+        id: this.props.match.params.id,
         profPic: res.data[0].prof_pic,
         coverPic: res.data[0].cover_pic,
         firstName: res.data[0].first_name,
@@ -37,6 +37,14 @@ class MyProfPage extends Component {
         bio: res.data[0].bio
       });
     });
+  }
+
+  toggleEdit() {
+    this.setState({
+      toggle: !this.state.toggle
+    });
+    console.log(this.state.id);
+    
   }
 
   render() {
@@ -51,36 +59,40 @@ class MyProfPage extends Component {
     } = this.state;
     return (
       <div className="ProfPage">
-        {this.state.toggle ? null : 
-        <div className="editProfBox">
-
-        </div>
-        }
         <div className="mainBox" key={id}>
           <div className="userPics">
             <img src={coverPic} alt="oops" className="coverPic" />
-            {toggle === false ? (
-              <button onClick={() => this.setState({ toggle: true })}>
+            {!toggle ? (
+              <button
+                className="profEdit-button"
+                onClick={() => this.toggleEdit()}
+              >
                 Edit Info
               </button>
             ) : (
-              <button onClick={() => this.setState({ toggle: false })}>
-                Confirm Changes
-              </button>
+              <EditProf
+                id={id}
+                coverPic={coverPic}
+                firstName={firstName}
+                lastName={lastName}
+                bio={bio}
+                profPic={profPic}
+                closePopup={() => this.toggleEdit()}
+              />
             )}
             <img src={profPic} alt="oops" className="profPic" />
           </div>
-            <div className="userStuffs">
-              <h2>
-                {firstName} {lastName}{" "}
-              </h2>
-              <h3>{bio}</h3>
-            </div>
+          <div className="userStuffs">
+            <h2>
+              {firstName} {lastName}{" "}
+            </h2>
+            <h3>{bio}</h3>
+          </div>
           <div className="lowerBox"></div>
 
-      <div className='chat'>
+          {/* <div className='chat'>
         <ChatRail/>
-      </div>
+      </div> */}
         </div>
       </div>
     );

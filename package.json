@@ -5,8 +5,6 @@
   "main": "server/server.js",
   "proxy": "http://localhost:2552",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.1.2",
     "aws-sdk": "^2.591.0",
     "axios": "^0.19.0",
@@ -15,6 +13,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "http-proxy-middleware": "^0.20.0",
+    "jest": "^24.9.0",
     "massive": "^6.1.4",
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
@@ -53,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0"
   }
 }
