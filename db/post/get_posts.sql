@@ -12,5 +12,5 @@ JOIN users u ON u.user_id = p.user_id
 JOIN friends f ON f.friend_id = u.user_id
 WHERE f.user_id = ${user_id}
 ORDER BY p.post_id DESC
-LIMIT 5
+LIMIT 10
 OFFSET ${offset};
