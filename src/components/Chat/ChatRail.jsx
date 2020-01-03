@@ -9,6 +9,7 @@ export default class ChatRail extends Component {
         super();
         this.state = {
             current_user: {},
+            users_names: [], 
             users: [],
         }
     }
@@ -34,7 +35,8 @@ export default class ChatRail extends Component {
 
             //save current user into state
             this.setState({
-              current_user: user
+              current_user: user,
+            //   users_names: [(`${} and ${} convo`)]
             });
 
 
@@ -46,11 +48,33 @@ export default class ChatRail extends Component {
                     let currentChatId = chat_ids[0].chat_id;
                     store.dispatch(setCurrentChat(user.id, currentChatId))
                 }
+                else if (chat_ids.length == 0) {
+                    console.log('creating new chat!')
+                    let title = 'newChat';
+                    //create a new chat
+                    axios.post(`/chat/${title}`)
+                        .then(r => {
+                            let chat_id_list = r.data;
+                            if(chat_id_list.length === 1){     
+                                let chat_id = chat_id_list[0].chat_id;
 
+                                //create two entries on the user_chat table
+                                let user_id = clickedUserId;
+                                axios.post('/userchat', {user_id, chat_id})
+                                user_id = user.id
+                                axios.post('/userchat', {user_id, chat_id})
+
+                                //save the new chat ID to the store
+                                store.dispatch(setCurrentChat(user.id, chat_id));
+                            }
+                        })
+                }
+                
             })
 
 
             //create a new row on chat table
+            //All of this code is made to create a new chat!
             // let title = 'newChat';
             // axios.post(`/chat/${title}`)
             // .then(r => {
