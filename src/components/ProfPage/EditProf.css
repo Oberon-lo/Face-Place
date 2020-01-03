@@ -21,8 +21,8 @@
   position: absolute;
   left: 15%;
   right: 15%;
-  top: 15%;
-  bottom: 15%;
+  top: 5%;
+  bottom: 5%;
   margin: auto;
   border-radius: 20px;
   background: white;
@@ -59,4 +59,50 @@
 }
 .leftBox {
   margin-right: 5px;
+}
+.editProfPic{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: grey;
+}
+.editCoverPic{
+  max-height: 35vh;
+  max-width: 93%;
+}
+.leftBox2 button {
+  padding: 7px;
+  font-size: 14px;
+  background: rgba(219, 227, 231, 0.95);
+}
+.rightBox2 button{
+  padding: 7px;
+  font-size: 14px;
+  background: rgba(219, 227, 231, 0.95);
+}
+.editButtons{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
+.picEditStuff{
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: space-between;
+	align-content: stretch;
+}
+.dropContainer{
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+  align-content: center;
 }
