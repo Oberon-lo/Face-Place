@@ -60,7 +60,7 @@ class MyProfPage extends Component {
         <div className="mainBox" key={id}>
           <div className="userPics">
             <img src={coverPic} alt="oops" className="coverPic" />
-            {toggle ? (
+            {!toggle ? (
               <button
                 className="profEdit-button"
                 onClick={() => this.toggleEdit()}
