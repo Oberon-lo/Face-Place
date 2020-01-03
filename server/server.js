@@ -83,8 +83,9 @@ app.delete('/post/comment/:com_id', comCtrl.deleteCom);
 
 // CHAT ENDPOINTS \\
 app.get('/chat/:user_id1/:user_id2', chatCtrl.getChat);
+app.post('/chatmessage', chatCtrl.addMessage);
+app.get('/chatmessages/:current_chat_id', chatCtrl.getMessages);
 app.post('/chat/:title', chatCtrl.createChat);
-app.post('/chat/message/:message_id', chatCtrl.addMessage);
 app.post('/userchat', chatCtrl.createUserChat);
 
 // const server = 
@@ -96,14 +97,70 @@ massive(CONNECTION_STRING).then(db => {
   );
 });
 
+getMessages_socket = (db, parcel, conn) => {
+  chatCtrl.getMessagesSocket(db, parcel.data.current_chat_id)
+  .then(messages => {
+    // console.log('******** retrieved messages from db', messages);    
+    conn.write(JSON.stringify({
+      type: 'GET_MESSAGES',
+      data: messages
+    }));
+  })
+}
+
+newMessage_socket = (db, parcel, conn) => {
+  chatCtrl.addMessageSocket(db, parcel).then(response => {
+    broadcastMessages_socket(db, parcel);
+  })
+}
+
+broadcastMessages_socket = (db, parcel) => {
+  console.log('broadcast chat id', parcel.data.current_chat_id)
+  SOCKET_CONNECTIONS[parcel.data.current_chat_id].forEach(sockConn => {
+    getMessages_socket(db, parcel, sockConn);
+  })
+}
+
+const SOCKET_CONNECTIONS = {};
+
 //WEBSOCKET ENDPOINTS\\
 const socketServer = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
 socketServer.on('connection', function(conn) {
-  console.log('connection opened');
-  conn.on('data', function(message) {
-    console.log('Incoming message', message);
-    conn.write(message);
-    // conn.close();
+  console.log('connection opened', conn);
+  let sessionId = conn._session.session_id;
+  let connId = conn.id;
+
+
+  // if(!SOCKET_CONNECTIONS.includes(sessionId)){
+  //   SOCKET_CONNECTIONS[sessionId] = conn;
+  // }
+  console.log('********** sessionId', sessionId);
+  console.log('********** connId', connId);
+
+
+
+  conn.on('data', function(parcel) {
+    parcel = JSON.parse(parcel);
+    let db = app.get("db");
+    let chat_id = parcel.data.current_chat_id; //parcel must ALWAYS contain the current chat id
+
+    if(!SOCKET_CONNECTIONS[chat_id]){
+      SOCKET_CONNECTIONS[chat_id] = [conn];
+    }
+    else {
+      SOCKET_CONNECTIONS[chat_id].push(conn);
+    }
+
+    console.log('****** SOCKET_CONNECTIONS', SOCKET_CONNECTIONS);
+
+    if(parcel.type === 'GET_MESSAGES'){
+      broadcastMessages_socket(db, parcel);
+    }
+    else if(parcel.type === 'NEW_MESSAGE'){
+      newMessage_socket(db, parcel, conn);
+    }
+
+
   });
   conn.on('close', function() {
     console.log('connection closed');

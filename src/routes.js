@@ -14,6 +14,6 @@ export default (
     <Route path="/register" component={Register} />
     <Route path="/myProfile/:id" component={MyProfPage} />
     <Route path="/profile/:id" component={ProfPage} />
-<Route path='/chat' component={ChatWindow}/>
+    <Route path='/chat' component={ChatWindow}/>
   </Switch>
 );
