@@ -44,9 +44,9 @@ class ProfPage extends Component {
         </div>
           <div className="lowerBox"></div>
 
-      <div className='chat'>
+      {/* <div className='chat'>
         <ChatRail/>
-      </div>
+      </div> */}
       </div>
     );
   }
