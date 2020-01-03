@@ -71,8 +71,8 @@ this.props.history.push(`/myProfile/${this.state.id}`)
               alt="oops"
             />
           </Link>
-          <h1>
-            <Link to="/">FacePlace!</Link>
+          <h1 onClick = {() => this.props.history.push('/home')}>
+            FacePlace!
           </h1>
         </div>
         <nav className="bar">
