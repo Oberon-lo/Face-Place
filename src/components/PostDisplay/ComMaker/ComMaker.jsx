@@ -2,20 +2,20 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {comResetter, comContentHandler} from './../../../ducks/reducer';
-import AddComImage from '../../AddImage/AddComImage';
+// import AddComImage from '../../AddImage/AddComImage';
 
 const ComMaker = (props) => {
 
-  const [imageToggle, setImageToggle] = useState(false);
+  // const [imageToggle, setImageToggle] = useState(false);
   const [com_cont, setCom_cont] = useState('');
-  const [comImgArr, setComImgArr] = useState([])
+  // const [comImgArr, setComImgArr] = useState([]);
 
   function submitCom(body) {
     axios
       .post(`/post/comments/${props.post_id}`, body)
       .then(response => {
         props.addComArr([ ...props.comArr, {user_id: props.user_id, last_name: props.last_name, first_name: props.first_name, prof_pic: props.prof_pic, com_id: response.data.com_id, com_cont}]);
-        props.setComCount(props.comCount + 1);
+        props.setComCount(Number(props.comCount) + 1);
         setCom_cont('');
       })
   }
@@ -23,13 +23,13 @@ const ComMaker = (props) => {
   return (
     <div className="ComMaker">
       <input className="content-input" value={com_cont} onChange={e => setCom_cont(e.target.value)} type="text"/>
-      {imageToggle ?
+      {/* {imageToggle ?
       <AddComImage comImgArr={comImgArr} setComImgArr={setComImgArr} />
       :
       null
-    }
+    } */}
     <div className="button-bar">
-      <button onClick={() => setImageToggle(!imageToggle)} >Add Image</button>
+      {/* <button onClick={() => setImageToggle(!imageToggle)} >Add Image</button> */}
       <button onClick={() => submitCom({user_id: props.user_id, com_cont, imgArr: props.com_img})} >Post</button>
     </div>
     </div>

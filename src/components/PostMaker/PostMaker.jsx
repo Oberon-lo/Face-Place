@@ -18,6 +18,7 @@ const PostMaker = (props) => {
       .then(response => {
         props.addPost([...props.postArr, {user_id: props.user_id, last_name: props.last_name, first_name: props.first_name, prof_pic: props.prof_pic, post_id: response.data.post_id, postcont}]);
         setPost_cont('');
+        setImgArr([]);
       });
   };
 
