@@ -3,7 +3,7 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
-import ChatRail from "../Chat/ChatRail";
+// import ChatRail from "../Chat/ChatRail";
 import EditProf from "./EditProf";
 import "./ProfPage.css";
 
@@ -91,9 +91,9 @@ class MyProfPage extends Component {
           <div className="lowerBox"></div>
 
         </div>
-          <div className='chat'>
+          {/* <div className='chat'>
         <ChatRail/>
-      </div>
+      </div> */}
       </div>
     );
   }
