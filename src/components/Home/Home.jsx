@@ -25,9 +25,9 @@ const Home = (props) => {
         await axios
             .get(`/posts/all/${props.user_id}`)
             .then(response => {
-                addPostArr([...postArr, ...response.data])
+                addPostArr([...postArr, ...response.data]);
             })
-        setOffset(offset + 5);
+        setOffset(offset + 10);
     }
 
 
