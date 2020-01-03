@@ -17,7 +17,7 @@ class MyProfPage extends Component {
       firstName: "",
       lastName: "",
       bio: "",
-      toggle: false,
+      toggle: false
     };
   }
 
@@ -29,7 +29,7 @@ class MyProfPage extends Component {
     axios.get(`/api/userInfo/${this.props.match.params.id}`).then(res => {
       // console.log("hit", res.data[0]);
       this.setState({
-        id: res.data[0].id,
+        id: this.props.match.params.id,
         profPic: res.data[0].prof_pic,
         coverPic: res.data[0].cover_pic,
         firstName: res.data[0].first_name,
@@ -43,6 +43,8 @@ class MyProfPage extends Component {
     this.setState({
       toggle: !this.state.toggle
     });
+    console.log(this.state.id);
+    
   }
 
   render() {
@@ -69,12 +71,12 @@ class MyProfPage extends Component {
               </button>
             ) : (
               <EditProf
-              id = {id}
-              coverPic = {coverPic}
-              firstName = {firstName}
-              lastName = {lastName}
-              bio = {bio}
-              profPic = {profPic}
+                id={id}
+                coverPic={coverPic}
+                firstName={firstName}
+                lastName={lastName}
+                bio={bio}
+                profPic={profPic}
                 closePopup={() => this.toggleEdit()}
               />
             )}
