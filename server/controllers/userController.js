@@ -1,74 +1,172 @@
 module.exports = {
-  prof_pic: (req, res) => {
+  updateUser: (req, res) => {
     const db = req.app.get("db");
-    const { prof_pic } = req.body;
+    const { first_name, last_name, bio, cover_pic, prof_pic } = req.body;
     const user_id = +req.params.id;
 
     db.userEdit
       .profile_pic({ prof_pic, user_id })
       .then(result => {
         res.status(200).send(result);
+        console.log("4");
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
         console.log(err);
       });
-  },
-  userName: (req, res) => {
-    const db = req.app.get("db");
-    const user_id = +req.params.id;
-    const { first_name, last_name } = req.body;
 
     db.userEdit
       .name({ first_name, last_name, user_id })
       .then(result => {
         res.status(200).send(result);
+        console.log("1");
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
         console.log(err);
       });
-  },
-  bio: (req, res) => {
-    const db = req.app.get("db");
-    const { bio } = req.body;
-    const user_id = +req.params.id;
-
-    db.userEdit
-      .bio({ bio, user_id })
-      .then(result => {
-        res.status(200).send(result);
-      })
-      .catch(err => {
-        res.status(500).send({ errorMessage: "Something went wrong." });
-        console.log(err);
-      });
-  },
-  coverPic: (req, res) => {
-    const db = req.app.get("db");
-    const { cover_pic } = req.body;
-    const user_id = +req.params.id;
 
     db.userEdit
       .cover_pic({ cover_pic, user_id })
       .then(result => {
         res.status(200).send(result);
-        console.log("hit");
+        console.log("3");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .bio({ bio, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("2");
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
         console.log(err);
       });
   },
-  getUserInfo(req,res){
-    const db = req.app.get('db');
+
+  updateUser2: (req, res) => {
+    const db = req.app.get("db");
+    const { first_name, last_name, bio, prof_pic } = req.body;
     const user_id = +req.params.id;
-    db.user.get_all_from_user(user_id).then(result => {
-      res.status(200).send(result);
-    }).catch(err => {
-      res.status(500).send({ errorMessage: "Something went wrong.", err });
-      console.log(err);
-    })
+
+    db.userEdit
+      .profile_pic({ prof_pic, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("4");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .name({ first_name, last_name, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("1");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .bio({ bio, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("2");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+  },
+
+  updateUser3: (req, res) => {
+    const db = req.app.get("db");
+    const { first_name, last_name, bio, cover_pic } = req.body;
+    const user_id = +req.params.id;
+
+    db.userEdit
+      .name({ first_name, last_name, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("1");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .cover_pic({ cover_pic, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("3");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .bio({ bio, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("2");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+  },
+
+  updateUser4: (req, res) => {
+    const db = req.app.get("db");
+    const { first_name, last_name, bio } = req.body;
+    const user_id = +req.params.id;
+
+    db.userEdit
+      .name({ first_name, last_name, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("1");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+
+    db.userEdit
+      .bio({ bio, user_id })
+      .then(result => {
+        res.status(200).send(result);
+        console.log("2");
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong." });
+        console.log(err);
+      });
+  },
+
+  getUserInfo(req, res) {
+    const db = req.app.get("db");
+    const user_id = +req.params.id;
+    db.user
+      .get_all_from_user(user_id)
+      .then(result => {
+        res.status(200).send(result);
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "Something went wrong.", err });
+        console.log(err);
+      });
   },
   getUserSession(req, res) {
     if (req.session.user) {

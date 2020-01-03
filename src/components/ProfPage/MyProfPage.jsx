@@ -43,7 +43,7 @@ class MyProfPage extends Component {
     this.setState({
       toggle: !this.state.toggle
     });
-    console.log(this.state.id);
+    // console.log(this.state.id);
     
   }
 
