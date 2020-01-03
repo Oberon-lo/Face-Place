@@ -8,12 +8,9 @@ header {
   justify-content: space-around;
   align-items: center;
   align-content: center;
-<<<<<<< HEAD
-=======
   position: sticky;
   z-index: 1;
   margin-top: 0px;
->>>>>>> master
 }
 
 .logo {
