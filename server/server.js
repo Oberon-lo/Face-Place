@@ -9,6 +9,7 @@ const auth = require("./controllers/authController.js");
 const postCtrl = require("./controllers/postController.js");
 const comCtrl = require('./controllers/comController.js');
 const userCtrl = require("./controllers/userController.js");
+const chatCtrl = require("./controllers/chatController");
 const s3Ctrl = require('./controllers/s3.js');
 const sockjs = require('sockjs');
 const http = require('http');
@@ -80,6 +81,11 @@ app.put('/post/comment/:com_id', comCtrl.editCom);
 // app.delete('/post/comment/img/:comment_img_id', comCtrl.deleteComImg);
 app.delete('/post/comment/:com_id', comCtrl.deleteCom);
 
+// CHAT ENDPOINTS \\
+app.get('/chat/:user_id1/:user_id2', chatCtrl.getChat);
+app.post('/chat/:title', chatCtrl.createChat);
+app.post('/chat/message/:message_id', chatCtrl.addMessage);
+app.post('/userchat', chatCtrl.createUserChat);
 
 // const server = 
 massive(CONNECTION_STRING).then(db => {

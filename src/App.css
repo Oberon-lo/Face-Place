@@ -1,17 +1,17 @@
 .App {
   text-align: center;
+  /* background-color: #CDCDCD; */
 }
 .body{
   min-height: 92vh;
 }
-
 header {
   position: sticky;
   z-index: 2;
   top: 0px;
 }
 .page{
-  display: flex;
+    display: flex;
   justify-content: space-between;
   max-width: 100vw;
 }

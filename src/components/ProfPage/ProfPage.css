@@ -31,7 +31,7 @@
   align-items: center;
   align-content: center;
 }
-.userPics button{
+.profEdit-button{
   position: absolute;
   z-index: 1;
   top: 5%;
@@ -42,11 +42,14 @@
   margin: 5px;
   border-color: rgba(219, 227, 231, 0);
 }
+.profEdit-button:hover{
+  background: rgba(219, 227, 231, 1);
+}
 .coverPic {
   max-height: 35vh;
-  min-width: 84%;
+  min-width: 93%;
   z-index:-1;
-  position: fixed;
+  position: absolute;
 }
 .profPic {
   position: absolute;
