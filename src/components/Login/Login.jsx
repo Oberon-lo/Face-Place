@@ -20,7 +20,7 @@ class Login extends Component {
     await axios
       .post("/api/login", { email, password })
       .then(res => {
-        getSession()
+        this.props.getSession();
         Swal.fire({
           icon: "success",
           title: "Logged in!",
@@ -81,7 +81,7 @@ class Login extends Component {
           />
           <br />
           <br />
-          <button data-testId = 'login' onClick={() => this.login()} className="loginButton">
+          <button data-testid = 'login' onClick={() => this.login()} className="loginButton">
             Login
           </button>
           <br />

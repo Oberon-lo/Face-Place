@@ -6,7 +6,6 @@ import { v4 as randomString } from "uuid";
 import Swal from "sweetalert2";
 import "./EditProf.css";
 import { withRouter } from "react-router-dom";
-import { Snowball } from "aws-sdk";
 
 class EditProf extends Component {
   constructor(props) {
