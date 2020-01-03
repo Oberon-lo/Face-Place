@@ -7,7 +7,8 @@ import AddComImage from '../../AddImage/AddComImage';
 const ComMaker = (props) => {
 
   const [imageToggle, setImageToggle] = useState(false);
-  const [com_cont, setCom_cont] = useState('')
+  const [com_cont, setCom_cont] = useState('');
+  const [comImgArr, setComImgArr] = useState([])
 
   function submitCom(body) {
     axios
@@ -23,7 +24,7 @@ const ComMaker = (props) => {
     <div className="ComMaker">
       <input className="content-input" value={com_cont} onChange={e => setCom_cont(e.target.value)} type="text"/>
       {imageToggle ?
-      <AddComImage />
+      <AddComImage comImgArr={comImgArr} setComImgArr={setComImgArr} />
       :
       null
     }

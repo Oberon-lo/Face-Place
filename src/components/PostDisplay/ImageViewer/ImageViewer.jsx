@@ -13,7 +13,6 @@ const ImageViewer = (props) => {
     axios
         .get(`/post/images/${props.post_id}`)
         .then(response => {
-            console.log('post image hit---------', response.data);
             setImgArr(response.data);
         });
 };

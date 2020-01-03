@@ -28,7 +28,7 @@ const AddComImage = (props) => {
     // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. 
     //We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
     axios
-      .get('/api/signs3', {
+      .get("/sign-s3", {
         params: {
           'file-name': fileName,
           'file-type': file.type
@@ -53,7 +53,7 @@ const AddComImage = (props) => {
       .put(signedRequest, file, options)
       .then(response => {
         setIsUploading(false);
-        props.comImgHandler([...props.com_img, url])
+        props.setComImgArr([...props.comimgArr, url])
       })
       .catch(err => {
         setIsUploading(false);

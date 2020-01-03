@@ -6,7 +6,6 @@ import './Comment.css';
 
 const Comment = (props) => {
     const { user_id, first_name, last_name, prof_pic, post_id, com_id, com_cont, index } = props.com;
-    console.log(props)
 
     const [edit, toggleEdit] = useState(false);
     const [comment_cont, setComment_cont] = useState(com_cont);
@@ -20,7 +19,6 @@ const Comment = (props) => {
         axios
             .get(`post/comments/img/${com_id}`)
             .then(response => {
-                console.log(response.data);
                 setImgArr(response.data);
             });
     };
@@ -39,11 +37,8 @@ const Comment = (props) => {
     };
 
     function comDeleter() {
-        console.log("props.comArr", props.comArr)
         const comArr = props.comArr;
-        console.log("before", comArr);
         comArr.splice(index, 1);
-        console.log("after", comArr);
         props.editComArr(comArr);
         axios
             .delete(`post/comment/${com_id}`)
