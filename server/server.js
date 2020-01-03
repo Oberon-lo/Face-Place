@@ -97,7 +97,7 @@ massive(CONNECTION_STRING).then(db => {
   );
 });
 
-getMessages_socket = (db, parcel, conn) => {
+const getMessages_socket = (db, parcel, conn) => {
   chatCtrl.getMessagesSocket(db, parcel.data.current_chat_id)
   .then(messages => {
     // console.log('******** retrieved messages from db', messages);    
@@ -108,13 +108,13 @@ getMessages_socket = (db, parcel, conn) => {
   })
 }
 
-newMessage_socket = (db, parcel, conn) => {
+const newMessage_socket = (db, parcel, conn) => {
   chatCtrl.addMessageSocket(db, parcel).then(response => {
     broadcastMessages_socket(db, parcel);
   })
 }
 
-broadcastMessages_socket = (db, parcel) => {
+const broadcastMessages_socket = (db, parcel) => {
   console.log('broadcast chat id', parcel.data.current_chat_id)
   SOCKET_CONNECTIONS[parcel.data.current_chat_id].forEach(sockConn => {
     getMessages_socket(db, parcel, sockConn);
