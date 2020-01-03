@@ -3,13 +3,25 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
+import "./EditProf.css";
 
 class EditProf extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      isUploading: false,
+      oldPic: "",
+      oldCover: ""
+    };
   }
-  
+
+  componentWillMount() {
+    this.setState({
+      oldPic: this.props.profPic,
+      oldCover: this.props.coverPic
+    });
+  }
+
   handleChange = (key, value) => {
     this.setState({
       [key]: value
@@ -66,36 +78,86 @@ class EditProf extends Component {
   // End of S3 stuff. \\
 
   render() {
+    const { id, coverPic, firstName, lastName, bio, profPic } = this.props;
+    const { oldPic, oldCover } = this.state;
     return (
-      <div className="dropContainer">
-        <Dropzone
-          onDropAccepted={this.getSignedRequest}
-          style={{
-            position: "relative",
-            maxHeight: "35vh",
-            minWidth: "90%",
-            borderWidth: 7,
-            marginTop: 100,
-            borderColor: "rgb(102, 102, 102)",
-            borderStyle: "dashed",
-            borderRadius: 5,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: 28
-          }}
-          accept="image/*"
-          multiple={false}
-        >
-          {this.state.isUploading ? (
-            <GridLoader />
-          ) : (
-            <p>Drop File or Click Here</p>
-          )}
-        </Dropzone>
+      <div className="popup">
+        <div className="popup_inner">
+          <h1> editing user: {id}</h1>
+          <div className="userForm">
+            <div className="leftBox">
+              <span>
+                First Name:{" "}
+                <input
+                  value={firstName}
+                  onChange={e =>
+                    this.handleChange("first_name", e.target.value)
+                  }
+                  placeholder="First name"
+                  type="text"
+                />
+              </span>
+              <br />
+              <br />
+              <span>
+                Last Name:{" "}
+                <input
+                  value={lastName}
+                  onChange={e => this.handleChange("last_name", e.target.value)}
+                  placeholder="Last name"
+                  type="text"
+                />
+              </span>
+            </div>
+
+            <div className="rightBox">
+              <div className="bioEdit">
+
+              <span>
+                {" "}
+                Bio: {""}
+              </span>
+                <textarea value={bio} cols="30" rows="10" ></textarea>
+              </div>
+            </div>
+
+            <h1>{this.props.text}</h1>
+          </div>
+            <button onClick={this.props.closePopup}>confirm changes</button>
+        </div>
       </div>
     );
   }
 }
 
 export default EditProf;
+
+{
+  /* <div className="dropContainer">
+  <Dropzone
+    onDropAccepted={this.getSignedRequest}
+    style={{
+      position: "relative",
+      maxHeight: "35vh",
+      maxWidth: "50%",
+      borderWidth: 7,
+      marginTop: 100,
+      borderColor: "rgb(102, 102, 102)",
+      borderStyle: "dashed",
+      borderRadius: 5,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 28
+    }}
+    accept="image/*"
+    multiple={false}
+  >
+    {this.state.isUploading ? (
+      <GridLoader />
+    ) : (
+      <p>Drop File or Click Here</p>
+    )}
+  </Dropzone>
+</div> */
+}
