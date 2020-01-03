@@ -17,6 +17,9 @@ const http = require('http');
 const {
   SESSION_SECRET,
   PASSWORD,
+  S3_BUCKET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
   SERVER_PORT,
   CONNECTION_STRING
 } = process.env;
@@ -45,7 +48,41 @@ app.get("/api/users", userCtrl.getAllUsers);
 
 // NODEMAILER / s3 \\
 app.post("/api/send", nodemailer.nodemailer);
-app.get("/sign-s3", s3Ctrl.s3);
+
+app.get("/sign-s3", (req, res) => {
+  aws.config = {
+    region: "us-west-1",
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY
+  };
+// console.log('hit1');
+
+  const s3 = new aws.S3();
+  const fileName = req.query["file-name"];
+  const fileType = req.query["file-type"];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 365 * 2,
+    ContentType: fileType,
+    ACL: "public-read"
+  };
+
+  s3.getSignedUrl("putObject", s3Params, (err, data) => {
+    if (err) {
+      console.log(err);
+      // console.log('hit2');
+      
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+
+    return res.send(returnData);
+  });
+});
 
 
 

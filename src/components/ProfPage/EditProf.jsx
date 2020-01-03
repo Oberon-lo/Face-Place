@@ -3,6 +3,7 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
+import Swal from "sweetalert2";
 import "./EditProf.css";
 
 class EditProf extends Component {
@@ -11,16 +12,17 @@ class EditProf extends Component {
     this.state = {
       isUploading: false,
       togglePic: false,
-      newCoverPic: "",
-      newProfPic: "",
+      cover_pic: "",
+      prof_pic: "",
       oldPic: "",
       oldCover: "",
-      newBio: "",
-      newFirstName: "",
-      newLastName: "",
+      bio: "bio is empty",
+      first_name: "",
+      last_name: "",
       user_id: 0,
       toggleCover: false,
-      toggleProf: false
+      toggleProf: false,
+      whichOne: ""
     };
   }
 
@@ -29,14 +31,112 @@ class EditProf extends Component {
     this.setState({
       oldPic: profPic,
       oldCover: coverPic,
-      newBio: bio,
-      newFirstName: firstName,
-      newLastName: lastName,
+      bio: bio,
+      first_name: firstName,
+      last_name: lastName,
       user_id: +id
     });
   }
 
+  putName(user_id, first_name, last_name) {
+    let name = "bio";
+    if (this.state.bio && this.state.first_name && this.state.last_name) {
+      axios
+        .put(`/api/name/${user_id}`, { first_name, last_name })
+        .then(console.log("hit 1"))
+        .catch(err => {
+          this.failure(err, name);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "Must fill out all fields",
+        confirmButtonText: "Try again"
+      });
+    }
+    console.log("hit 1");
+  }
+
+  putBio(bio, user_id) {
+    let name = "bio";
+    if (this.state.bio && this.state.first_name && this.state.last_name) {
+      axios
+        .put(`/api/bio/${user_id}`, this.state.bio)
+        .then(console.log("hit 2"))
+        .catch(err => {
+          this.failure(err, name);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "Must fill out all fields",
+        confirmButtonText: "Try again"
+      });
+    }
+  }
+
+  putCover(cover_pic, user_id) {
+    let name = "cover pic";
+    if (this.state.cover_pic !== "") {
+      axios
+        .put(`api/cover/${user_id}`, cover_pic)
+        .then(console.log("hit 3"))
+        .catch(err => {
+          this.failure(err, name);
+        });
+    }
+  }
+
+  putProf(prof_pic, user_id) {
+    let name = "profPic";
+    if (this.state.prof_pic !== "") {
+      axios
+        .put(`/api/profilePic/${user_id}`, prof_pic)
+        .then(console.log("hit 4"))
+        .catch(err => {
+          this.failure(err, name);
+        });
+    }
+  }
+
+  finalize() {
+    const {
+      cover_pic,
+      prof_pic,
+      bio,
+      first_name,
+      last_name,
+      user_id
+    } = this.state;
+
+    this.putName(user_id, first_name, last_name);
+    this.putBio(bio, user_id);
+    this.putCover(cover_pic, user_id);
+    this.putProf(prof_pic, user_id);
+
+    Swal.fire({
+      icon: "success",
+      title: "Changes Saved!",
+      text: this.state.coverPic,
+      confirmButtonText: "Continue"
+    }).then(result => {
+      if (result.value) {
+        window.location.reload();
+      }
+    });
+  }
+
+  failure(err, name) {
+    Swal.fire({
+      icon: "error",
+      title: name,
+      text: err.response.data.message,
+      confirmButtonText: "Try again"
+    });
+  }
+
   handleChange = (key, value) => {
+    console.log(key, value);
     this.setState({
       [key]: value
     });
@@ -74,7 +174,7 @@ class EditProf extends Component {
       .put(signedRequest, file, options)
       .then(response => {
         this.setState({ isUploading: false, url });
-        this.handleImg(url);
+        this.handleChange(this.state.whichOne, url);
       })
       .catch(err => {
         this.setState({
@@ -100,13 +200,15 @@ class EditProf extends Component {
 
   toggleCover() {
     this.setState({
-      toggleCover: !this.state.toggleCover
+      toggleCover: !this.state.toggleCover,
+      whichOne: "cover_pic"
     });
   }
 
   toggleProf() {
     this.setState({
-      toggleProf: !this.state.toggleProf
+      toggleProf: !this.state.toggleProf,
+      whichOne: "prof_pic"
     });
   }
 
@@ -115,11 +217,11 @@ class EditProf extends Component {
       user_id,
       oldPic,
       oldCover,
-      newBio,
-      newFirstName,
-      newLastName,
-      newCoverPic,
-      newProfPic,
+      bio,
+      first_name,
+      last_name,
+      cover_pic,
+      prof_pic,
       togglePic,
       toggleProf,
       toggleCover
@@ -128,7 +230,7 @@ class EditProf extends Component {
       <div className="popup">
         <div className="popup_inner">
           <h1> editing user: {user_id}</h1>
-          {!togglePic ? (
+          {togglePic ? (
             <div className="userForm">
               <div className="picEditStuff">
                 {toggleCover ? (
@@ -139,12 +241,12 @@ class EditProf extends Component {
                     >
                       NeverMind
                     </button>
-                    {newCoverPic ? (
+                    {cover_pic ? (
                       <>
                         <br />
                         <br />
                         <img
-                          src={newCoverPic}
+                          src={cover_pic}
                           alt="Hmm this one did'nt work"
                           className="editCoverPic"
                         />
@@ -176,7 +278,7 @@ class EditProf extends Component {
                             <p>Drop File or Click Here</p>
                           )}
                         </Dropzone>
-                        <br/>
+                        <br />
                       </div>
                     )}
                   </div>
@@ -199,12 +301,12 @@ class EditProf extends Component {
                     >
                       NeverMind
                     </button>
-                    {newProfPic ? (
+                    {prof_pic ? (
                       <>
                         <br />
                         <br />
                         <img
-                          src={newProfPic}
+                          src={prof_pic}
                           alt="Hmm this one did'nt work"
                           className="editCoverPic"
                         />
@@ -257,9 +359,9 @@ class EditProf extends Component {
                 <span>
                   First Name:{" "}
                   <input
-                    value={newFirstName}
+                    value={first_name}
                     onChange={e =>
-                      this.handleChange("newFirstName", e.target.value)
+                      this.handleChange("first_name", e.target.value)
                     }
                     placeholder="First name"
                     type="text"
@@ -270,9 +372,9 @@ class EditProf extends Component {
                 <span>
                   Last Name:{" "}
                   <input
-                    value={newLastName}
+                    value={last_name}
                     onChange={e =>
-                      this.handleChange("newLastName", e.target.value)
+                      this.handleChange("last_name", e.target.value)
                     }
                     placeholder="Last name"
                     type="text"
@@ -284,10 +386,10 @@ class EditProf extends Component {
                 <div className="bioEdit">
                   <span> Bio: {""}</span>
                   <textarea
-                    value={newBio}
+                    value={bio}
                     cols="30"
                     rows="10"
-                    onChange={e => this.handleChange("newBio", e.target.value)}
+                    onChange={e => this.handleChange("bio", e.target.value)}
                   ></textarea>
                 </div>
               </div>
@@ -298,7 +400,7 @@ class EditProf extends Component {
           <br />
           <br />
           <div className="editButtons">
-            {togglePic ? (
+            {!togglePic ? (
               <button
                 className="register-button"
                 onClick={() => this.togglePic()}
@@ -310,11 +412,17 @@ class EditProf extends Component {
                 className="register-button"
                 onClick={() => this.togglePic()}
               >
-                Back
+                Change Info
               </button>
             )}
             <br />
-            <button className="register-button" onClick={this.props.closePopup}>
+            <button
+              className="register-button"
+              onClick={() => {
+                this.finalize();
+                this.props.closePopup();
+              }}
+            >
               Confirm Changes
             </button>
           </div>

@@ -8,6 +8,7 @@ module.exports = {
       .profile_pic({ prof_pic, user_id })
       .then(result => {
         res.status(200).send(result);
+        console.log('4');
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
@@ -23,6 +24,7 @@ module.exports = {
       .name({ first_name, last_name, user_id })
       .then(result => {
         res.status(200).send(result);
+        console.log('1');
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
@@ -38,6 +40,7 @@ module.exports = {
       .bio({ bio, user_id })
       .then(result => {
         res.status(200).send(result);
+        console.log('2');
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
@@ -53,7 +56,7 @@ module.exports = {
       .cover_pic({ cover_pic, user_id })
       .then(result => {
         res.status(200).send(result);
-        console.log("hit");
+        console.log('3');
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
