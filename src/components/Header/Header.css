@@ -9,6 +9,17 @@ header {
   align-items: center;
   align-content: center;
 }
+footer {
+  background: #91AFC4;
+  height: 95px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
 
 .logo {
   color: whitesmoke;
