@@ -41,16 +41,18 @@ module.exports = {
           try {
             await db.post.make_image_post([post_id[0].post_id, img]);
             if (i === post_img.length - 1) {
-              return res.status(201).send({ message: 'post created' });
+              return res.status(201).send({post_id: post_id[0].post_id, message: 'post created' });
             }
           } catch (err) {
+            console.log(err)
             return res.send(err);
           }
         });
       } else if (post_img.length === 0) {
-        return res.status(201).send({ message: 'post created' });
+        return res.status(201).send({post_id: post_id[0].post_id, message: 'post created' });
       }
     } catch (err) {
+      console.log(err);
       return res.status(400).send(err);
     }
   },

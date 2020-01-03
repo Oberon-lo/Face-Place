@@ -1,3 +1,4 @@
 SELECT * FROM comments c
 JOIN users u ON u.user_id = c.user_id
-WHERE c.post_id = $1;
+WHERE c.post_id = $1
+ORDER BY c.com_id ASC;

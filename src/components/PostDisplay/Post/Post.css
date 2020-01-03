@@ -1,0 +1,13 @@
+.Post {
+  box-shadow: 3px 3px 5px;
+}
+
+.Post .author {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.author .h3 {
+  margin: 5px;
+}

@@ -31,7 +31,7 @@ module.exports = {
           try {
             await db.comment.add_com_img({com_id: com_id[0].com_id, img});
             if (i === imgArr.length - 1) {
-              res.status(201).send({ message: 'comment created' });
+              res.status(201).send({com_id: com_id[0].com_id, message: 'comment created' });
             };
           } catch (err) {
             console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
           }
         });
       } else if (imgArr.length === 0) {
-        res.status(201).send({ message: 'comment created' });
+        res.status(201).send({com_id: com_id[0].com_id, message: 'comment created' });
       };
     } catch (err) {
       console.log(err);
