@@ -5,6 +5,8 @@ import { GridLoader } from "react-spinners";
 import { v4 as randomString } from "uuid";
 import Swal from "sweetalert2";
 import "./EditProf.css";
+import { withRouter } from "react-router-dom";
+import { Snowball } from "aws-sdk";
 
 class EditProf extends Component {
   constructor(props) {
@@ -38,105 +40,115 @@ class EditProf extends Component {
     });
   }
 
-  putName(user_id, first_name, last_name) {
-    let name = "bio";
-    if (this.state.bio && this.state.first_name && this.state.last_name) {
-      axios
-        .put(`/api/name/${user_id}`, { first_name, last_name })
-        .then(console.log("hit 1"))
-        .catch(err => {
-          this.failure(err, name);
-        });
-    } else {
-      Swal.fire({
-        icon: "error",
-        text: "Must fill out all fields",
-        confirmButtonText: "Try again"
+  checkIt() {
+    const { cover_pic, prof_pic } = this.state;
+    if (cover_pic === "") {
+      this.setState({
+        cover_pic: this.props.coverPic
+      });
+    } 
+    if (prof_pic === "") {
+      this.setState({
+        prof_pic: this.props.profPic
       });
     }
-    console.log("hit 1");
+    console.log('hit', cover_pic, prof_pic);
+    
   }
-
-  putBio(bio, user_id) {
-    let name = "bio";
-    if (this.state.bio && this.state.first_name && this.state.last_name) {
-      axios
-        .put(`/api/bio/${user_id}`, this.state.bio)
-        .then(console.log("hit 2"))
-        .catch(err => {
-          this.failure(err, name);
-        });
-    } else {
-      Swal.fire({
-        icon: "error",
-        text: "Must fill out all fields",
-        confirmButtonText: "Try again"
-      });
-    }
-  }
-
-  putCover(cover_pic, user_id) {
-    let name = "cover pic";
-    if (this.state.cover_pic !== "") {
-      axios
-        .put(`api/cover/${user_id}`, cover_pic)
-        .then(console.log("hit 3"))
-        .catch(err => {
-          this.failure(err, name);
-        });
-    }
-  }
-
-  putProf(prof_pic, user_id) {
-    let name = "profPic";
-    if (this.state.prof_pic !== "") {
-      axios
-        .put(`/api/profilePic/${user_id}`, prof_pic)
-        .then(console.log("hit 4"))
-        .catch(err => {
-          this.failure(err, name);
-        });
-    }
-  }
-
+  
   finalize() {
     const {
-      cover_pic,
       prof_pic,
-      bio,
       first_name,
+      bio,
       last_name,
+      cover_pic,
       user_id
     } = this.state;
-
-    this.putName(user_id, first_name, last_name);
-    this.putBio(bio, user_id);
-    this.putCover(cover_pic, user_id);
-    this.putProf(prof_pic, user_id);
-
-    Swal.fire({
-      icon: "success",
-      title: "Changes Saved!",
-      text: this.state.coverPic,
-      confirmButtonText: "Continue"
-    }).then(result => {
-      if (result.value) {
-        window.location.reload();
-      }
-    });
+    
+    
+    if (first_name && last_name && bio && cover_pic && prof_pic) {
+      axios
+        .put(`/api/user1/${user_id}`, {
+          first_name,
+          last_name,
+          bio,
+          cover_pic,
+          prof_pic
+        })
+        .then(this.success())
+        .catch(err => {
+          this.failure(err);
+        });
+    } else if (first_name && last_name && bio && prof_pic) {
+      axios
+        .put(`/api/user2/${user_id}`, {
+          first_name,
+          last_name,
+          bio,
+          prof_pic
+        })
+        .then(this.success())
+        .catch(err => {
+          this.failure(err);
+        });
+    } else if (first_name && last_name && bio && cover_pic){
+      axios
+        .put(`/api/user3/${user_id}`, {
+          first_name,
+          last_name,
+          bio,
+          cover_pic
+        })
+        .then(this.success())
+        .catch(err => {
+          this.failure(err);
+        });
+    } else if (first_name && last_name && bio) {
+      axios
+        .put(`/api/user4/${user_id}`, {
+          first_name,
+          last_name,
+          bio
+        })
+        .then(this.success())
+        .catch(err => {
+          this.failure(err);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: 'Please fill out all fields',
+        confirmButtonText: "Try again"
+      });
+    }
   }
 
-  failure(err, name) {
+  failure(err) {
     Swal.fire({
       icon: "error",
-      title: name,
       text: err.response.data.message,
       confirmButtonText: "Try again"
     });
   }
 
+  success() {
+    Swal.fire({
+      icon: "success",
+      title: "Changes Saved!",
+      text: "You will have to Login Again",
+      confirmButtonText: "Continue"
+    }).then(result => {
+      if (result.value) {
+        axios
+          .delete("/api/logout")
+          .then(this.props.history.push("/"), window.location.reload());
+      }
+    });
+  }
+
   handleChange = (key, value) => {
-    console.log(key, value);
+    // console.log(key, value);
     this.setState({
       [key]: value
     });
@@ -308,7 +320,7 @@ class EditProf extends Component {
                         <img
                           src={prof_pic}
                           alt="Hmm this one did'nt work"
-                          className="editCoverPic"
+                          className="editProfPic"
                         />
                       </>
                     ) : (
@@ -432,4 +444,4 @@ class EditProf extends Component {
   }
 }
 
-export default EditProf;
+export default withRouter(EditProf);
