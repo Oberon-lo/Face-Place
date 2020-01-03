@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import{ Link }from 'react-router-dom'
 import Comment from "../Comments/Comment";
 import { connect } from "react-redux";
 import { postContSelect } from "../../../ducks/reducer";
@@ -72,10 +73,14 @@ const Post = props => {
       .catch(err => console.log(err));
   }
 
+  
+
   return (
     <div className="Post">
       <div className="author">
+        <Link to = {`/profile/${user_id}`}>
         <img src={prof_pic} alt={first_name + "" + last_name} height="40px" />
+        </Link>
         <h3>{first_name}&nbsp;</h3>
         <h3>{last_name}</h3>
       </div>
