@@ -81,7 +81,7 @@ class Login extends Component {
           />
           <br />
           <br />
-          <button data-testId = 'login' onClick={() => this.login()} className="loginButton">
+          <button data-testid = 'login' onClick={() => this.login()} className="loginButton">
             Login
           </button>
           <br />
