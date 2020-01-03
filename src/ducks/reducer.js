@@ -14,6 +14,7 @@ const initialState = {
     //chat
     chat_cont: '',
     img: '',
+    current_chat_id: 0,
     //post
     postArr: [],
     post_img: [],
@@ -37,6 +38,7 @@ const SELECT_POST = 'SELECT_POST';
 const SELECT_COMMENT = 'SELECT_COMMENT';
 const GET_SESSION = "GET_SESSION";
 const RESET_SESSION = "RESET_SESSION";
+const SET_CURRENT_CHAT = "SET_CURRENT_CHAT";
 
 // post 
 const RETRIEVE_POSTS = "RETRIEVE_POSTS";
@@ -49,6 +51,15 @@ export const setAuthenticated = (hasAuth, userObj) => {
         payload: {
             isAuthenticated: hasAuth,
             current_user: userObj
+        }
+    };
+};
+export const setCurrentChat = (user_id, chat_id) => {
+    return {
+        type: SET_CURRENT_CHAT,
+        payload: {
+            user_id: user_id,
+            current_chat_id: chat_id
         }
     };
 };
@@ -113,6 +124,11 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case IS_AUTHENTICATED:
             return {
+                ...state,
+                ...payload
+            }
+        case SET_CURRENT_CHAT:
+            return{
                 ...state,
                 ...payload
             }

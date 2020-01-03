@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import store from '../../ducks/store';
+import {setCurrentChat} from '../../ducks/reducer';
 
 export default class ChatRail extends Component {
     constructor() {
         super();
         this.state = {
             current_user: {},
-            users: []
+            users: [],
         }
     }
 
     getAllUsers = () => {
         axios.get(`/api/users`)
             .then(res => {
-                console.log('stuff', res.data);
+                // console.log('stuff', res.data);
                 this.setState(
                     { users: res.data }
                 );
@@ -34,14 +36,17 @@ export default class ChatRail extends Component {
             this.setState({
               current_user: user
             });
-            console.log('clicked user', clickedUserId)
-            console.log('current user', user)
 
 
             //check and see if previous convo exists
             axios.get(`/chat/${user.id}/${clickedUserId}`)
             .then(response => {
-                console.log('list of chat ids', response.data)
+                let chat_ids = response.data
+                if (chat_ids.length > 0) {
+                    let currentChatId = chat_ids[0].chat_id;
+                    store.dispatch(setCurrentChat(user.id, currentChatId))
+                }
+
             })
 
 
