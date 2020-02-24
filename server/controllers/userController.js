@@ -155,19 +155,6 @@ module.exports = {
       });
   },
 
-  getUserFriends: async (req, res) => {
-    const db = req.app.get('db');
-    const user_id = +req.params.id;
-    db.user
-      .get_user_friends([user_id])
-      .then(response => {
-        res.status(200).send(response);
-      })
-      .catch(err => {
-        res.status(500).send({ errorMessage: "could not get friends", err})
-        console.log(err);
-      })
-  },
 
   getUserInfo(req, res) {
     const db = req.app.get("db");
