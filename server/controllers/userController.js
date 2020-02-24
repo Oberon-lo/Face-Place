@@ -155,6 +155,7 @@ module.exports = {
       });
   },
 
+
   getUserInfo(req, res) {
     const db = req.app.get("db");
     const user_id = +req.params.id;
