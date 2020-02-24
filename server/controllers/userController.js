@@ -155,6 +155,7 @@ module.exports = {
       });
   },
 
+
   getUserInfo(req, res) {
     const db = req.app.get("db");
     const user_id = +req.params.id;
@@ -168,6 +169,21 @@ module.exports = {
         console.log(err);
       });
   },
+
+  getUserFriends: async (req, res) => {
+    const db = req.app.get('db');
+    const user_id = +req.params.id;
+    db.user
+      .get_user_friends([user_id])
+      .then(response => {
+        res.status(200).send(response);
+      })
+      .catch(err => {
+        res.status(500).send({ errorMessage: "could not get friends", err})
+        console.log(err);
+      })
+  },
+
   getUserSession(req, res) {
     if (req.session.user) {
       return res.status(200).send(req.session.user);
