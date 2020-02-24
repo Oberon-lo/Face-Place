@@ -44,7 +44,7 @@ const ImageEditor = (props) => {
       // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. 
       //We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
       axios
-        .get('/api/signs3', {
+        .get('/sign-s3', {
           params: {
             'file-name': fileName,
             'file-type': file.type
@@ -99,8 +99,8 @@ const ImageEditor = (props) => {
         onDropAccepted={getSignedRequest}
         style={{
           position: 'relative',
-          width: 90,
-          height: 90,
+          width: 50,
+          height: 50,
           borderStyle: 'dashed',
           borderWidth: 7,
           borderColor: 'rgb(102, 102, 102)',
