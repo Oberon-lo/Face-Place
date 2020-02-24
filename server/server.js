@@ -97,7 +97,8 @@ app.put("/api/email/:id", auth.emailVerif);
 app.get("/api/session", userCtrl.getUserSession)
 
 // USER ENDPOINTS \\
-app.get("/api/userInfo/:id", userCtrl.getUserInfo)
+app.get("/api/userInfo/:id", userCtrl.getUserInfo);
+app.get("/api/userFriends/:id", userCtrl.getUserFriends);
 app.put(`/api/user1/:id`, userCtrl.updateUser);
 app.put(`/api/user2/:id`, userCtrl.updateUser2);
 app.put(`/api/user3/:id`, userCtrl.updateUser3);

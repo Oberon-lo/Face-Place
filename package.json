@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "server/server.js",
-  "proxy": "http://localhost:2552",
+  "proxy": "http://localhost:4554",
   "dependencies": {
     "@testing-library/user-event": "^7.1.2",
     "aws-sdk": "^2.591.0",
