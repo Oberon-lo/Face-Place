@@ -4,6 +4,7 @@ const massive = require("massive");
 const session = require("express-session");
 const aws = require("aws-sdk");
 const uuid = require("uuid/v4");
+const path = require("path");
 const nodemailer = require("./controllers/nodemailer.js");
 const auth = require("./controllers/authController.js");
 const postCtrl = require("./controllers/postController.js");
@@ -39,7 +40,10 @@ app.use(
     }
   })
 );
-
+app.use(express.static(`${__dirname}/../build`));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 // ENDPOINTS \\
 
