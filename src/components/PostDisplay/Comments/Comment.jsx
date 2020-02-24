@@ -69,7 +69,7 @@ const Comment = props => {
     <div className="comment">
       <div className="author">
         <Link to = {`/profile/${user_id}`}>
-        <img src={prof_pic} alt={first_name + "" + last_name} height="20px" />
+        <img src={prof_pic} alt={first_name + "" + last_name} style = {{height: "20px"}} />
         </Link>
         <h6>{first_name}&nbsp;</h6>
         <h6>{last_name}</h6>

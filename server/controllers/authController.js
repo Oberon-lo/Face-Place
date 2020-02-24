@@ -56,6 +56,10 @@ module.exports = {
         .status(200)
         .send({
           message: `Welcome back ${req.session.user.firstName} ${req.session.user.lastName}!`
+        })
+        .catch(err => {
+          res.status(500).send({ err, message: "something went wrong" });
+          console.log(err);
         });
     } else {
       res.status(404).send({ message: "Password incorrect" });
@@ -65,7 +69,7 @@ module.exports = {
     req.session.destroy();
     res.status(200).send({ message: "Logged out" });
   },
-  emailVerif: (req,res) => {
+  emailVerif: (req, res) => {
     const db = req.app.get("db");
     const user_id = +req.params.id;
 
@@ -73,7 +77,7 @@ module.exports = {
       .email_verif({ user_id })
       .then(result => {
         // console.log(user_id);
-        res.status(200).send({result, message:'done' });
+        res.status(200).send({ result, message: "done" });
       })
       .catch(err => {
         res.status(500).send({ errorMessage: "Something went wrong." });
@@ -92,10 +96,10 @@ module.exports = {
       next();
     } else {
       console.log(res.session.user);
-      
+
       res
         .status(401)
-        .send({ message: "User should not be able to access this element."});
+        .send({ message: "User should not be able to access this element." });
     }
   },
   adminsOnly: (req, res, next) => {

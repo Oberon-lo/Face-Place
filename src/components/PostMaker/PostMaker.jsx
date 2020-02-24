@@ -11,23 +11,35 @@ const PostMaker = props => {
   const [postcont, setPost_cont] = useState("");
   const [imgArr, setImgArr] = useState([]);
 
-  // ! TODO: Nate please add sweet alert for post submission.
   function submitPost(body) {
-    axios.post(`/posts/newPost`, body).then(response => {
-      props.addPost([
-        ...props.postArr,
-        {
-          user_id: props.user_id,
-          last_name: props.last_name,
-          first_name: props.first_name,
-          prof_pic: props.prof_pic,
-          post_id: response.data.post_id,
-          postcont
-        }
-      ]);
-      setPost_cont("");
-      setImgArr([]);
-    });
+    axios
+      .post(`/posts/newPost`, body)
+      .then(response => {
+        props.addPost([
+          ...props.postArr,
+          {
+            user_id: props.user_id,
+            last_name: props.last_name,
+            first_name: props.first_name,
+            prof_pic: props.prof_pic,
+            post_id: response.data.post_id,
+            postcont
+          }
+        ]);
+        setPost_cont("");
+        setImgArr([]);
+      })
+      .then(
+        Swal.fire({
+          icon: "success",
+          title: "Posted!",
+          confirmButtonText: "Continue"
+        }).then(result => {
+          if (result.value) {
+            window.location.reload();
+          }
+        })
+      );
   }
 
   return (
