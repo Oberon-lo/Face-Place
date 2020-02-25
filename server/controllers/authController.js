@@ -57,10 +57,7 @@ module.exports = {
         .send({
           message: `Welcome back ${req.session.user.firstName} ${req.session.user.lastName}!`
         })
-        .catch(err => {
-          res.status(500).send({ err, message: "something went wrong" });
-          console.log(err);
-        });
+        
     } else {
       res.status(404).send({ message: "Password incorrect" });
     }

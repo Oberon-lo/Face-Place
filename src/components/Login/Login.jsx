@@ -41,7 +41,7 @@ class Login extends Component {
       .catch(err => {
         Swal.fire({
           icon: "error",
-          text: err.response.data.message
+          text: "something went wrong"
         });
       });
   }

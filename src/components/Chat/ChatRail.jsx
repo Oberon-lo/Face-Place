@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import store from "../../ducks/store";
 import { setCurrentChat } from "../../ducks/reducer";
+import session from "express-session";
 
 export default class ChatRail extends Component {
   constructor() {
@@ -10,19 +11,28 @@ export default class ChatRail extends Component {
     this.state = {
       current_user: {},
       users_names: [],
-      users: []
+      friendIds: [],
+      friends: []
     };
   }
 
-  getAllUsers = () => {
-    axios.get(`/api/users`).then(res => {
-      // console.log('stuff', res.data);
-      this.setState({ users: res.data });
+  componentDidMount = () => {
+    this.getFriendIds();
+  };
+
+  getFriendIds = () => {
+    axios.get(`/api/userFriends/${session.user_id}`).then(res => {
+      console.log(session.user_id);
+      this.setState({ friendIds: res.data });
     });
   };
-  componentDidMount = () => {
-    this.getAllUsers();
-  };
+
+getFriends =() => {
+this.state.friendIds.map(f => {
+axios.get(`/api/userInfo/${f.friend_id}`)
+.then(res => {this.state.friends.push(res.data)})
+})
+};
 
   startConvo = clickedUserId => {
     //get current user session.user_id
@@ -88,12 +98,12 @@ export default class ChatRail extends Component {
   };
 
   render() {
-    const { users } = this.state;
+    const { friends } = this.state;
     return (
       <div>
         Chat
         <div className="chatContent">
-          {users.map(u => (
+          {friends.map(u => (
             <Link key={u.user_id} to="/chat">
               <div
                 onClick={() => this.startConvo(u.user_id)}

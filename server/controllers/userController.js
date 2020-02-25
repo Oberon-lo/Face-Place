@@ -160,7 +160,7 @@ module.exports = {
     const db = req.app.get("db");
     const user_id = +req.params.id;
     db.user
-      .get_all_from_user(user_id)
+      .get_user_info(user_id)
       .then(result => {
         res.status(200).send(result);
       })
@@ -193,7 +193,7 @@ module.exports = {
   },
   getAllUsers(req, res) {
     const db = req.app.get("db");
-    db.user
+    db.dev_tools
       .get_all_users()
       .then(result => {
         res.status(200).send(result);
